@@ -95,6 +95,11 @@ body
 
 }
 
+#HTMLcontainer
+{
+	display: none;
+}
+
 #CSScontainer
 {
 	display: none;
@@ -107,12 +112,14 @@ body
 
 #RESULTcontainer
 {
+	display: none;
 }
 
 iframe
 {
 	height: 100%;
-	border: none; 
+	border: none;
+	width: 100%; 
 	position: relative;
 	left: 20px;
 	font-size: 1.5em;
