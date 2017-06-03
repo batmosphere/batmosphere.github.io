@@ -1,0 +1,128 @@
+body
+{
+	margin: 0px;
+	color: black;
+	padding: 0px;
+}
+
+#titlebar
+{
+	width: 100%;
+	height: 65px;
+	background-color: #e0e0e0;
+	border-bottom: 2px grey solid;
+}
+
+#codeplayer
+{
+	float: left;
+	font-weight: bold;
+	font-size: 1.3em;	
+	margin-left: 25px;
+	padding: 0;
+}
+
+#toggles
+{	
+	position: relative;
+	top: 10px;
+	list-style: none;
+	border-radius: 5px;
+	border: 1px black solid;
+	margin: 0 auto;
+	width: 267px;
+	height: 38px;
+	padding: 0px;
+
+}
+
+#toggles li
+{
+	float: left;
+	border-right: 1px black solid;
+	padding: 10px 5px;
+}
+
+
+
+#runbutton
+{
+	float: right;
+	border-radius: 5px;
+	background-color: grey;
+	position: relative;
+	bottom: 30px;
+	right: 20px;
+	width: 70px;
+	height: 40px;
+	
+}
+
+.clear
+{
+	clear: both;
+	margin: 0px;
+}
+
+.codecontainer
+{
+	height: 100%;
+	width: 50%;
+	float: left;
+	margin-top: -14px;
+	position: relative;
+}
+
+
+.codecontainer textarea
+{
+	width: 100%;
+	height : 100%;
+	border-radius: 1px solid grey;
+	font-size: 1.2em;
+	padding: 50px 10px 10px 10px;
+	font-family: verdana;
+	box-sizing: border-box;
+}
+
+.codelabel
+{
+	position: absolute;
+	right: 10px;
+	top:13px; 
+	font-size: 1.4em;
+	font-weight: bold;
+
+}
+
+#CSScontainer
+{
+	display: none;
+}
+
+#JAVASCRIPTcontainer
+{
+	display: none;
+}
+
+#RESULTcontainer
+{
+}
+
+iframe
+{
+	height: 100%;
+	border: none; 
+	position: relative;
+	left: 20px;
+	font-size: 1.5em;
+	font-family: verdana;
+	padding: 10px;
+
+}
+
+.selected
+{
+	background-color: grey;
+	color: white;
+}

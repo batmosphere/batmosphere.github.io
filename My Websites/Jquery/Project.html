@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Code Player</title>
+
+	<script type="text/javascript" src="jquery.min.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="projectcss.css">
+
+</head>
+<body>
+
+<div id="titlebar">
+	<h2 id="codeplayer">CodePlayer</h2>
+
+	
+		
+	<ul id="toggles">
+		<li class="toggle selected">HTML</li>
+		<li class="toggle">CSS</li>
+		<li class="toggle">JAVASCRIPT</li>
+		<li class="toggle selected" style="border: none;">RESULT</li>
+	</ul>
+
+		<button id="runbutton">RUN</button>
+
+</div>
+
+<div class="clear"></div>
+
+<div id="HTMLcontainer" class="codecontainer">
+
+	<div class="codelabel">HTML</div>
+
+	<textarea id="htmlcode" placeholder="Enter HTML Code"></textarea>
+	
+</div>
+
+<div id="CSScontainer" class="codecontainer">
+
+	<div class="codelabel">CSS</div>
+
+	<textarea id="csscode" placeholder="Enter CSS Code"></textarea>
+	
+</div>
+
+<div id="JAVASCRIPTcontainer" class="codecontainer">
+
+	<div class="codelabel">JavaScript</div>
+
+	<textarea id="javascriptcode" placeholder="Enter JavaScript Code"></textarea>
+	
+</div>
+
+<div id="RESULTcontainer" class="codecontainer">
+
+	<div class="codelabel">Result</div>
+
+	<iframe id="resultframe" src=""></iframe>
+	
+</div>
+
+<script type="text/javascript" src="projectscript.js">
+	
+</script>
+
+</body>
+</html>
