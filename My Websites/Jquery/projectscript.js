@@ -1,4 +1,3 @@
-alert("Run Button ko dabao, upper right corner main aur fir Result button dabana Center main!!! <3");
 
 
 var windowheight = $(window).height();
