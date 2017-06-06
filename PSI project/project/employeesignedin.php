@@ -85,6 +85,19 @@ color:#00000;
 
 }
 
+.dailysales
+{
+   position: relative;
+   border: 1px solid red;
+   border-radius: 6px; 
+   padding: 10px;
+   left: 70px; 
+   bottom: 50px; 
+   width: 140px; 
+   font-size: 1.2em;
+
+}
+
 </style>
 
 <script type="text/javascript">
@@ -215,7 +228,7 @@ popupWindow =window.open('printform.php',"_blank","directories=no, status=no, me
 
 
 
-<p style="position: relative; left: 50px; font-size: 1.2em; width: 190px; ;">Total Sales of this day :<p> 
+<p style="position: relative; left: 50px; font-size: 1.2em; width: 190px;">Total Sales of <?php echo "<p style='position: relative; left: 162px; font-size: 1.2em; bottom: 37px; width: 90px;'>$da</p>" ?> :</p> 
        <?php
 function formatMoney($number, $fractional=false) {
     if ($fractional) {
@@ -236,7 +249,7 @@ while($row = mysqli_fetch_array($result1,MYSQLI_ASSOC))
 {
     $rrr=$row['sum(sales)'];
     $x = formatMoney($rrr, true);
-   echo "<p style='position: relative;  left: 230px; bottom: 37px; width: 60px; font-size: 1.2em;'><strong>$x</strong></p>";
+   echo "<p class='dailysales'><strong>Rupees $x</strong></p>";
  }
 
 ?></b><br /><br />
@@ -246,13 +259,13 @@ while($row = mysqli_fetch_array($result1,MYSQLI_ASSOC))
 
 
 <form method="post" action="logout.php">
-<button name="logout" style="width: 220px; float: right; background-color: #f44336; border: 1px #bc0000 solid; margin-right: 30px; position: relative; bottom: 260px; " >Logout</button>
+<button name="logout" style="width: 220px; float: right; background-color: #f44336; border: 1px #bc0000 solid; margin-right: 30px; position: relative; bottom: 350px; " >Logout</button>
 </form>
 
 
 
-<div class="content" id="sales" style="position: relative; bottom: 270px; left: 380px; width: 600px; height: 45px; ">
-   <p>Sales between Two Dates. Please enter two dates in YYYY-MM-DD format.</p>
+<div class="content" id="sales" style="position: relative; bottom: 330px; left: 380px; width: 600px; height: 45px; ">
+   <p style="font-size: 1.2em; font-family: helvetica;">Sales between Two Dates. Please enter two dates in YYYY-MM-DD format.</p>
    <form action="" method="post">
    From: <input name="from" type="text" class="tcal"/>
       To: <input name="to" type="text" class="tcal"/>
@@ -269,7 +282,7 @@ while($row = mysqli_fetch_array($result1,MYSQLI_ASSOC))
             {
                $rrr=$row['sum(sales)'];
                $x = formatMoney($rrr, true);
-               echo "<p style='position: relative;  left: 100px; bottom: 37px; width: 220px; font-size: 1.2em;'><strong>Rupees $x</strong></p>";
+               echo "<p style='position: relative;  left: 100px; bottom: 38px; width: 220px; font-size: 1.2em;'><strong>Rupees $x</strong></p>";
              }
             }
       ?>

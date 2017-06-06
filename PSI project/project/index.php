@@ -23,7 +23,7 @@
 	<div id="page">
 		
 
-		<h2>Welcome to Inventory Management System</h2>
+		<h2 style="color: black;">Welcome to Inventory Management System</h2>
 
 		<button onclick="document.getElementById('adminlogin').style.display='block'" style="width: 200px; margin-left: 170px" >Admin Login</button>
 		<button onclick="document.getElementById('employeelogin').style.display='block'" style="width: 200px;" >Employee Login</button>
@@ -31,7 +31,7 @@
 
 	</div>
 	
-    
+
 
 
     <div id="adminlogin" class="modal" >
