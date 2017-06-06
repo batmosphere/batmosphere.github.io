@@ -13,7 +13,7 @@ session_start();
 		$price=$_POST['price'];
 		$qty=$_POST['qty'];
       
-      mysqli_query($db,"insert into inventory (item, price, qtyleft, qty_sold, sales) VALUES ('$proname', '$price','$qty', 0, 0)");
+      mysqli_query($db,"insert into inventory (item, price, qtyleft, qty_sold) VALUES ('$proname', '$price','$qty', 0)");
       header("location: adminsignedin.php");
 
   }

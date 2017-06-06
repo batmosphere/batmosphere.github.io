@@ -8,139 +8,100 @@ include('db.php');
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>Live Table Edit</title>
+<title>Receipt of Inventory Management System</title>
 
-<style>
-body
-{
-font-family:Arial, Helvetica, sans-serif;
-font-size:14px;
-}
-.editbox
-{
-display:none
-}
-td
-{
-padding:7px;
-border-left:1px solid #fff;
-border-bottom:1px solid #fff;
-}
-table{
-border-right:1px solid #fff;
-}
-.edit_tr:hover
-{
-}
-.edit_tr
-{
-background: none repeat scroll 0 0 #D5EAF0;
-}
-th
-{
-font-weight:bold;
-text-align:left;
-padding:7px;
-border:1px solid #fff;
-border-right-width: 0px;
-}
-.head
-{
-background: none repeat scroll 0 0 #91C5D4;
-color:#00000;
 
-}
+<link rel="stylesheet" href="style3.css" type="text/css" media="screen" />
 
-</style>
-<link rel="stylesheet" href="reset.css" type="text/css" media="screen" />
-
-<link rel="stylesheet" href="tab.css" type="text/css" media="screen" />
 </head>
 
 <body bgcolor="#dedede" style="width: 939px;">
  
-<h1>Inventory <?php echo date("Y-m-d"); ?></h1>
+<h1 style="margin: 15px auto 13px 280px;
+    font-family: Helvetica;
+    font-style: italic;
+    font-size: 40px;">Receipt of <?php echo date("Y-m-d"); ?></h1>
+
+
+
 <div id="box1">
 <ul id="boxes">
 <li id="inventory" class="box">
 <table width="912px">
 <tr class="head">
 <th>Date</th>
-<th>Item</th>
+<th>ID</th>
+<th>Item Name</th>
 <th>Qty Sold </th>
-<th>Quantity Start</th>
+<th>Qty Left </th>
 <th>Price</th>
 <th>Sales</th>
-<th>Quantity End</th>
 </tr>
-<?php
-$da=date("Y-m-d");
+                    <?php
+               $da=date("Y-m-d");
 
- $db = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
+                  
+                  $db = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
+               $query = "select * from sales where date='$da'";
+               $sql=mysqli_query($db, $query);
+               $i=1;
+               while($row=mysqli_fetch_array($sql,MYSQLI_ASSOC))
+                        {
+                        $id=$row['product_id'];
+                        $qty=$row['qty'];
+                        $sales=$row['sales'];
 
-$sql=mysqli_query($db,"select * from inventory");
-$i=1;
-while($row=mysqli_fetch_array($sql,MYSQLI_ASSOC))
-{
-$id=$row['id'];
-$item=$row['item'];
-$qtyleft=$row['qtyleft'];
-$qty_sold=$row['qty_sold'];
-$price=$row['price'];
-$sales=$row['sales'];
-if($i%2)
-{
-?>
-<tr id="<?php echo $id; ?>" class="edit_tr">
-<?php } else { ?>
-<tr id="<?php echo $id; ?>" bgcolor="#f2f2f2" class="edit_tr">
-<?php } ?>
-<td class="edit_td">
-<span class="text"><?php echo $da; ?></span> 
-</td>
-<td>
-<span class="text"><?php echo $item; ?></span> 
-</td>
-<td>
-<span id="last_<?php echo $id; ?>" class="text">
-<?php
-$sqls=mysqli_query($db,"select * from sales where date='$da' and product_id='$id'");
-while($rows=mysqli_fetch_array($sql,MYSQLI_ASSOC))
-{
-echo $rows[2];
-$rtrt=$rows[2];
-}
-?>
-</span> 
-<input type="text" value="<?php echo $rtrt; ?>"  class="editbox" id="last_input_<?php echo $id; ?>"/>
-</td>
-<td>
-<?php $begbal=$rtrt+$qtyleft;?>
-<span class="text"><?php echo $begbal; ?></span>
-</td>
-<td>
-<span id="first_<?php echo $id; ?>" class="text"><?php echo $price; ?></span>
-<input type="text" value="<?php echo $price; ?>" class="editbox" id="first_input_<?php echo $id; ?>" />
-</td>
-<td>
-<?php $dailysales=$rtrt*$price?>
-<span class="text"><?php echo $dailysales; ?></span> 
-</td>
-<td>
-<span class="text"><?php echo $qtyleft; ?></span>
-</td>
-</tr>
+                         $query1 = "select item,price,qtyleft from inventory where id='$id'";
+                         $sql1=mysqli_query($db, $query1);
+                         $row2=mysqli_fetch_array($sql1,MYSQLI_ASSOC);
+                         $price = $row2['price'];
+                         $item = $row2['item'];
+                         $qtyleft = $row2['qtyleft'];
 
-<?php
-$i++;
-}
-?>
+                        if($i%2)
+                        {
+                        ?>
+                        <tr id="<?php echo $id; ?>" class="edit_tr">
+                                 <?php } 
 
+                                 else { ?>
+                                 <tr id="<?php echo $id; ?>" bgcolor="#f2f2f2" class="edit_tr">
+                                 <?php 
+                                 }
+                                 ?>
+                                 <td>
+                                          <span class="text"><?php echo $da; ?></span> 
+                                 </td>
+                                 <td>
+                                          <span class="text"><?php echo $id; ?></span> 
+                                 </td>
+                                 <td>
+                                          <span class="text"><?php echo $item; ?></span> 
+                                 </td>
+                                 <td>
+                                          <span class="text"><?php echo $qty; ?></span>
+                                 </td>
+                                 <td>
+                                          <span class="text"><?php echo $qtyleft; ?></span> 
+                                 </td>
+                                 <td>
+                                          <span class="text"><?php echo $price; ?></span>
+                                 </td>
+                                 <td>
+                                          <span class="text"><?php echo $sales; ?></span>
+                                 </td>
+                        </tr>
+
+                        <?php
+                        $i++;
+               }
+
+               ?>
 </table>
 <br />
-<div style="float:left;">
-Total Sales of this day:
-	    <b>Php <?php
+<div style="float:left;  margin-top: 10px; font-size: 1.3em;">
+<p >Total Sales of this day:<p>
+	    <b> <?php
 function formatMoney($number, $fractional=false) {
     if ($fractional) {
         $number = sprintf('%.2f', $number);
@@ -164,7 +125,8 @@ while($row = mysqli_fetch_array($result1,MYSQLI_ASSOC))
 
 ?></b>
 </div><br /><br />
-<input name="" type="button" value="Print" onclick="javascript:window.print()" style="cursor:pointer; float:left;" />
+
+<button style="position: relative; top: 65px; right: 215px;" onclick="javascript:window.print()">Print</button>
 </li>
 </ul>
 </div>

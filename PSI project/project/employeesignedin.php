@@ -1,7 +1,19 @@
-
 <?php
 include('db.php');
 
+   $db = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
+
+
+session_start();
+   
+   $user_check = $_SESSION['username'];
+   
+   $ses_sql = mysqli_query($db,"select username from employee where username = '$user_check' ");
+   
+   $row = mysqli_fetch_array($ses_sql,MYSQLI_ASSOC);
+   
+   $login_session = $row['username'];
+   
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -11,65 +23,17 @@ include('db.php');
 <title>Inventory System</title>
 <script type="text/javascript" src="http://ajax.googleapis.com/
 ajax/libs/jquery/1.5/jquery.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function()
-{
-$(".edit_tr").click(function()
-{
-var ID=$(this).attr('id');
-$("#first_"+ID).show();
-$("#last_"+ID).hide();
-$("#last_input_"+ID).show();
-}).change(function()
-{
-var ID=$(this).attr('id');
-var first=$("#first_input_"+ID).val();
-var last=$("#last_input_"+ID).val();
-var dataString = 'id='+ ID +'&price='+first+'&qty_sold='+last;
-$("#first_"+ID).html('<img src="load.gif" />');
 
 
-if(first.length && last.length>0)
-{
-$.ajax({
-type: "POST",
-url: "ajax.php",
-data: dataString,
-cache: false,
-success: function(html)
-{
+<link rel="stylesheet" type="text/css" href="style2.css">
 
-$("#first_"+ID).html(first);
-$("#last_"+ID).html(last);
-}
-});
-}
-else
-{
-alert('Enter something.');
-}
-
-});
-
-$(".editbox").mouseup(function() 
-{
-return false
-});
-
-$(document).mouseup(function()
-{
-$(".editbox").hide();
-$(".text").show();
-});
-
-});
-</script>
 <style>
 body
 {
-font-family:Arial, Helvetica, sans-serif;
+font-family: Helvetica, sans-serif;
 font-size:14px;
-padding:10px;
+padding:0px;
+margin: 0px;
 }
 .editbox
 {
@@ -83,6 +47,10 @@ border-bottom:1px solid #fff;
 }
 table{
 border-right:1px solid #fff;
+padding-left: 20px;
+padding-right: 20px;
+padding-top: 10px;
+padding-bottom: 10px; 
 }
 .editbox
 {
@@ -118,12 +86,7 @@ color:#00000;
 }
 
 </style>
-<link rel="stylesheet" href="reset.css" type="text/css" media="screen" />
 
-<link rel="stylesheet" href="tab.css" type="text/css" media="screen" />
-<link rel="stylesheet" type="text/css" href="tcal.css" />
-<script type="text/javascript" src="tcal.js"></script> 
-<link href="tabs.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 
 var popupWindow=null;
@@ -131,121 +94,128 @@ var popupWindow=null;
 function child_open()
 { 
 
-popupWindow =window.open('printform.php',"_blank","directories=no, status=no, menubar=no, scrollbars=yes, resizable=no,width=950, height=400,top=200,left=200");
+popupWindow =window.open('printform.php',"_blank","directories=no, status=no, menubar=no, scrollbars=yes, resizable=no,width=1000, height=700,top=100,left=200 bottom=100 ");
 
 }
 </script>
 </head>
 
 <body bgcolor="#dedede">
- 
-<h1>Inventory System </h1>
-<ol id="toc">
-    <li><a href="#inventory"><span>Inventory</span></a></li>
-    <li><a href="#sales"><span>Sales</span></a></li>
-    <li><a href="#alert"><span>To be order</span></a></li>
-   <li><a href="index.php"><span>Logout</span></a></li>
-</ol>
-
-<div class="content" id="inventory">
-Click the table rows to enter the quantity sold<br><br>
 
 
+
+               <div style="border-bottom: 1px solid black;">
+                     <h1>Welcome <?php echo $login_session; ?></h1> 
+               </div>
+
+
+<br />
 <table width="100%">
-<tr class="head">
-<th>Date</th>
-<th>Item</th>
-<th>Quantity Left</th>
-<th>Qty Sold </th>
-<th>Price</th>
-<th>Sales</th>
-</tr>
-<?php
-$da=date("Y-m-d");
+               <tr class="head">
+               <th>ID</th>
+               <th>Item</th>
+               <th>Quantity Left</th>
+               <th>Price</th>
+               <th> Total Sales</th>
+               </tr>
+               <?php
+               $da=date("Y-m-d");
 
-   
-   $db = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
-session_start();
-$query = "select * from inventory";
-$sql=mysqli_query($db, $query);
-$i=1;
-while($row=mysqli_fetch_array($sql,MYSQLI_ASSOC))
-{
-$id=$row['id'];
-$item=$row['item'];
-$qtyleft=$row['qtyleft'];
-$qty_sold=$row['qty_sold'];
-$price=$row['price'];
-$sales=$row['sales'];
+                  
+                  $db = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
+               $query = "select * from inventory";
+               $sql=mysqli_query($db, $query);
+               $i=1;
+               while($row=mysqli_fetch_array($sql,MYSQLI_ASSOC))
+                        {
+                        $id=$row['id'];
+                        $item=$row['item'];
+                        $qtyleft=$row['qtyleft'];
+                        $qty_sold=$row['qty_sold'];
+                        $price=$row['price'];
+                        $sales=$row['sales'];
 
-if($i%2)
-{
-?>
-<tr id="<?php echo $id; ?>" class="edit_tr">
-<?php } 
+                        if($i%2)
+                        {
+                        ?>
+                        <tr id="<?php echo $id; ?>" class="edit_tr">
+                                 <?php } 
 
-else { ?>
-<tr id="<?php echo $id; ?>" bgcolor="#f2f2f2" class="edit_tr">
-<?php 
-}
-?>
-<td class="edit_td">
-<span class="text"><?php echo $da; ?></span> 
-</td>
-<td>
-<span class="text"><?php echo $item; ?></span> 
-</td>
-<td>
-<span class="text"><?php echo $qtyleft; ?></span>
-</td>
-<td>
+                                 else { ?>
+                                 <tr id="<?php echo $id; ?>" bgcolor="#f2f2f2" class="edit_tr">
+                                 <?php 
+                                 }
+                                 ?>
+                                 <td>
+                                          <span class="text"><?php echo $id; ?></span> 
+                                 </td>
+                                 <td>
+                                          <span class="text"><?php echo $item; ?></span> 
+                                 </td>
+                                 <td>
+                                          <span class="text"><?php echo $qtyleft; ?></span>
+                                 </td>
+                                 <td>
+                                          <span class="text"><?php echo $price; ?></span>
+                                 </td>
+                                 <td>
+                                          <span class="text"><?php echo $sales; ?></span>
+                                 </td>
+                        </tr>
 
-<span id="last_<?php echo $id; ?>" class="text">
-<?php
-$sqls=mysqli_query($db,"select * from sales where date='$da' and product_id='$id'");
-while($rows=mysqli_fetch_array($sqls,MYSQLI_ASSOC))
-{
-echo $rows['qty'];
-}
-?>
-</span> 
-<input type="text" value="<?php echo $qty_sold; ?>"  class="editbox" id="last_input_<?php echo $id; ?>"/>
-</td>
-<td>
-<span id="first_<?php echo $id; ?>" class="text"><?php echo $price; ?></span>
-<input type="text" value="<?php echo $price; ?>" class="editbox" id="first_input_<?php echo $id; ?>" />
-</td>
-<td>
+                        <?php
+                        $i++;
+               }
 
-<span class="text"><?php echo $sales; ?>
-<?php
-$sqls=mysqli_query($db,"select * from sales where date='$da' and product_id='$id'");
-while($rows=mysqli_fetch_array($sqls,MYSQLI_ASSOC))
-{
-$rtyrty=$rows['qty'];
-$rrrrr=$rtyrty*$price;
-echo $rrrrr;
-}
-
-?>
-</span> 
-</td>
-</tr>
-
-<?php
-$i++;
-}
-
-?>
-
-
-
+               ?>
 
 </table>
+
 <br />
 
 
-Total Sales of this day:
+<button onclick="document.getElementById('addsales').style.display='block'" style="width: 200px; position: relative; left: 20px;" >Purchase Inventory item</button>
+
+
+               <div class=" modal" id="addsales">
+               <form action="addsales.php" class="modal-content animate" method="post">
+                  <div class="imgcontainer">
+                     <span onclick="document.getElementById('addsales').style.display='none'" class="close" title="Close Modal">&times;</span>
+                   </div>
+
+                  <div style="margin-left: 48px;">
+                  Product name:<?php
+                  $name= mysqli_query($db,"select * from inventory");
+                  
+                  echo '<select name="ITEM" id="user" class="textfield1">';
+                   while($res= mysqli_fetch_assoc($name))
+                  {
+                  echo '<option value="'.$res['id'].'" style="margin-left:-60px;">';
+                  echo $res['item'];
+                  echo'</option>';
+                  }
+                  echo'</select>';
+                  ?>
+                  </div>
+                  <br />
+                  <div style="margin-left: 97px;">Quantity:<input style="margin-left: 37px;" name="qty" type="text" /></div>
+                  <div style="margin-left: 127px; margin-top: 14px;"><input style=" margin-left: 60px; width: 255px; background-color: #4CAF50; color: white;" name="" type="submit" value="Purchase" /></div>
+               </form>
+               </div>
+
+
+
+
+<?php
+   
+   echo "<br />";
+
+?>
+
+
+
+
+<p style="position: relative; left: 50px; font-size: 1.2em; width: 190px; ;">Total Sales of this day :<p> 
        <?php
 function formatMoney($number, $fractional=false) {
     if ($fractional) {
@@ -265,50 +235,61 @@ $result1 = mysqli_query($db,"select sum(sales) from sales where date='$da'");
 while($row = mysqli_fetch_array($result1,MYSQLI_ASSOC))
 {
     $rrr=$row['sum(sales)'];
-   echo formatMoney($rrr, true);
+    $x = formatMoney($rrr, true);
+   echo "<p style='position: relative;  left: 230px; bottom: 37px; width: 60px; font-size: 1.2em;'><strong>$x</strong></p>";
  }
 
 ?></b><br /><br />
-<input name="" type="button" value="Print" onclick="javascript:child_open()" style="cursor:pointer;" />
+
+<button onclick="javascript:child_open()" style="width: 200px; position: relative; left: 20px; bottom: 70px;" >Print Receipt</button>
 </div>
 
 
-<div class="content" id="alert">
-   <ul>
-   <?php
-   $CRITICAL=10;
-   $sql2=mysqli_query($db,"select * from inventory where qtyleft<='$CRITICAL'");
-   while($row2=mysqli_fetch_array($sql2,MYSQLI_ASSOC))
-   {
-   echo '<li>'.$row2['item'].'</li>';
-   }
-   ?>
-   </ul>
-</div>
-<div class="content" id="sales">
-   <form action="employeesignedin.php#sales" method="post">
+<form method="post" action="logout.php">
+<button name="logout" style="width: 220px; float: right; background-color: #f44336; border: 1px #bc0000 solid; margin-right: 30px; position: relative; bottom: 260px; " >Logout</button>
+</form>
+
+
+
+<div class="content" id="sales" style="position: relative; bottom: 270px; left: 380px; width: 600px; height: 45px; ">
+   <p>Sales between Two Dates. Please enter two dates in YYYY-MM-DD format.</p>
+   <form action="" method="post">
    From: <input name="from" type="text" class="tcal"/>
       To: <input name="to" type="text" class="tcal"/>
-     <input name="" type="submit" value="Seach" />
+     <button name="submit" type="submit">Search</button>
      </form><br />
-    Total Sales:  
      <?php
-     $a=$_POST['from'];
-     $b=$_POST['to'];
-      $result1 = mysqli_query($db,"select sum(sales) FROM sales where date BETWEEN '$a' AND '$b'");
-      while($row = mysqli_fetch_array($result1,MYSQLI_ASSOC))
-      {
-         $rrr=$row['sum(sales)'];
-         echo formatMoney($rrr, true);
-       }
-      
+     if(isset($_POST['submit']))
+     {      
+            echo "<p style='width: 100px; font-size: 1.2em;'> Total Sales : </p>";
+            $a=$_POST['from'];
+            $b=$_POST['to'];
+            $result1 = mysqli_query($db,"select sum(sales) FROM sales where date BETWEEN '$a' AND '$b'");
+            while($row = mysqli_fetch_array($result1,MYSQLI_ASSOC))
+            {
+               $rrr=$row['sum(sales)'];
+               $x = formatMoney($rrr, true);
+               echo "<p style='position: relative;  left: 100px; bottom: 37px; width: 220px; font-size: 1.2em;'><strong>Rupees $x</strong></p>";
+             }
+            }
       ?>
 </div>
 
-</div>
-<script src="activatables.js" type="text/javascript"></script>
+
 <script type="text/javascript">
-activatables('page', ['inventory', 'alert', 'sales']);
+
+   // Get the modal
+var modal1 = document.getElementById('addsales');
+
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal1 ) {
+        modal1.style.display = "none";
+    }
+}
+
 </script>
+
 </body>
 </html>
