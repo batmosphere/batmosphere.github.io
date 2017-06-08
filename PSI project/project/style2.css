@@ -5,6 +5,17 @@ font-size:14px;
 padding:0;
 margin: 0;
 }
+
+
+.totalsales
+{
+	position:relative; 
+	left: 15px; 
+	bottom: 150px;
+	
+}
+
+
 .editbox
 {
 display:none
@@ -110,19 +121,23 @@ span.psw {
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
     padding-top: 60px;
+    
 
 }
 
 /* Modal Content/Box */
 .modal-content {
-    background-color: #fefefe;
-    margin: 90px auto auto 400px; /* 5% from the top, 15% from the bottom and centered */
+    
+    margin: 0 auto; 
     border: 1px solid #888;
     padding: 30px;
     padding-left: 30px;
     padding-bottom: 30px;
     font-size: 1.3em;
-    width: 600px; /* Could be more or less, depending on screen size */
+    border-radius: 8px;
+    
+
+
 }
 
 select
@@ -184,4 +199,5 @@ input
        width: 100%;
     }
 }
+
 

@@ -17,10 +17,10 @@
 
     <link rel="stylesheet" type="text/css" href="style1.css">
 </head>
-<body>
+<body style="background-color: #0f7f7f;">
 
 
-	<div id="page">
+	<div id="page" style="background-color: #efefef;">
 		
 
 		<h2 style="color: black;">Welcome to Inventory Management System</h2>

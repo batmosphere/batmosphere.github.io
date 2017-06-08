@@ -25,78 +25,10 @@ session_start();
 ajax/libs/jquery/1.5/jquery.min.js"></script>
 
 
-<link rel="stylesheet" type="text/css" href="style2.css">
+<link rel="stylesheet" type="text/css" href="stylesheet2.css" media="screen">
+<link rel="stylesheet" type="text/css" href="stylesheet4.css" media="screen">
 
 <style>
-body
-{
-font-family: Helvetica, sans-serif;
-font-size:14px;
-padding:0px;
-margin: 0px;
-}
-.editbox
-{
-display:none
-}
-td
-{
-padding:7px;
-border-left:1px solid #fff;
-border-bottom:1px solid #fff;
-}
-table{
-border-right:1px solid #fff;
-padding-left: 20px;
-padding-right: 20px;
-padding-top: 10px;
-padding-bottom: 10px; 
-}
-.editbox
-{
-font-size:14px;
-width:29px;
-background-color:#ffffcc;
-
-border:solid 1px #000;
-padding:0 4px;
-}
-.edit_tr:hover
-{
-background:url(edit.png) right no-repeat #80C8E5;
-cursor:pointer;
-}
-.edit_tr
-{
-background: none repeat scroll 0 0 #D5EAF0;
-}
-th
-{
-font-weight:bold;
-text-align:left;
-padding:7px;
-border:1px solid #fff;
-border-right-width: 0px;
-}
-.head
-{
-background: none repeat scroll 0 0 #91C5D4;
-color:#00000;
-
-}
-
-.dailysales
-{
-   position: relative;
-   border: 1px solid red;
-   border-radius: 6px; 
-   padding: 10px;
-   left: 70px; 
-   bottom: 50px; 
-   width: 140px; 
-   font-size: 1.2em;
-
-}
 
 </style>
 
@@ -136,7 +68,7 @@ popupWindow =window.open('printform.php',"_blank","directories=no, status=no, me
 
                   
                   $db = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
-               $query = "select * from inventory";
+               $query = "select * from inventory order by id";
                $sql=mysqli_query($db, $query);
                $i=1;
                while($row=mysqli_fetch_array($sql,MYSQLI_ASSOC))
@@ -187,10 +119,10 @@ popupWindow =window.open('printform.php',"_blank","directories=no, status=no, me
 <br />
 
 
-<button onclick="document.getElementById('addsales').style.display='block'" style="width: 200px; position: relative; left: 20px;" >Purchase Inventory item</button>
+<button onclick="document.getElementById('addsales').style.display='block'" style="width: 200px; position: relative; left: 20px; " >Purchase Inventory item</button>
 
 
-               <div class=" modal" id="addsales">
+               <div class=" modal" id="addsales" >
                <form action="addsales.php" class="modal-content animate" method="post">
                   <div class="imgcontainer">
                      <span onclick="document.getElementById('addsales').style.display='none'" class="close" title="Close Modal">&times;</span>
@@ -228,23 +160,130 @@ popupWindow =window.open('printform.php',"_blank","directories=no, status=no, me
 
 
 
+
+                           <div style="padding: 20px; margin-left: 30px; position: relative; bottom: 102px; left: 245px; width: 700px;">
+
+                           <button onclick="document.getElementById('productsoldbyname').style.display='block'" style="width: 200px; " >Calculate Sales of a particular Product</button>
+
+                                 <button onclick="document.getElementById('itemsoldbydate').style.display='block'" style="width: 200px; " >Calculate Sales on a particular Date</button>
+
+                              <button onclick="document.getElementById('totalsales').style.display='block'" style="width: 200px; " >Calculate Total sales</button>
+
+
+                                 
+                              </div>
+
+
+
+
+<div class=" modal" id="totalsales">
+<form action="employeesignedin.php" class="modal-content animate" method="post">
+   <div class="imgcontainer">
+               <span onclick="document.getElementById('totalsales').style.display='none'" class="close" title="Close Modal">&times;</span>
+             <div style="padding: 30px;">
+                  
+                   <p style="position: relative; left: 50px; font-size: 1.2em; width: 140px;">Total Sales = </p> 
+                   </div>
+                      
+                      <?php
+               function formatMoney($number, $fractional=false) {
+                   if ($fractional) {
+                       $number = sprintf('%.2f', $number);
+                   }
+                   while (true) {
+                       $replaced = preg_replace('/(-?\d+)(\d\d\d)/', '$1,$2', $number);
+                       if ($replaced != $number) {
+                           $number = $replaced;
+                       } else {
+                           break;
+                       }
+                   }
+                   return $number;
+               }     
+               $result1 = mysqli_query($db,"select sum(sales) from sales ");
+               while($row = mysqli_fetch_array($result1,MYSQLI_ASSOC))
+               {
+                   $rrr=$row['sum(sales)'];
+                   $x = formatMoney($rrr, true);
+                   echo "
+                   <div class='totalsales' style='position:relative; bottom: 95px;'>
+                  <p ><strong>Rupees $x</strong></p>
+                  </div>";
+                }
+
+               ?>
+
+               <button onclick="javascript:childtotal_open()" style="width: 200px; position: relative; right: 130px; bottom: 90px;" > Print Receipt</button>
+            </div>
+            </form>
+</div>
+
+
+
+
+            <div id="itemsoldbydate" class="modal" >
+           
+           <form class="modal-content animate" method="post" action="Employeeitemsoldbydate.php">
+             <div class="imgcontainer">
+               <span onclick="document.getElementById('itemsoldbydate').style.display='none'" class="close" title="Close Modal">&times;</span>
+               
+             </div>
+
+             <div class="container">
+               <label style="font-size: 1.2em;"><b> Please enter the Date to be searched</b></label>
+               <input type="text" placeholder="Enter Date" name="date" required>
+
+                 
+               <input class="sub" name="submit" type="submit"  style="margin-left: 20px; width: 140px;" />           
+             </div>
+
+             
+               
+             </div>
+           </form>
+         </div>
+
+
+
+
+
+<div class=" modal" id="productsoldbyname">
+   <form action="Employeeitemsoldbyname.php" class="modal-content animate" method="post">
+            <div class="imgcontainer">
+               <span onclick="document.getElementById('productsoldbyname').style.display='none'" class="close" title="Close Modal">&times;</span>
+             </div>
+
+            <div style="margin-left: 48px;">
+            Product name: <?php
+            $name= mysqli_query($db,"select * from inventory");
+            
+            echo '<select name="ID" id="user" class="textfield1">';
+             while($res= mysqli_fetch_assoc($name))
+            {
+            echo '<option value="'.$res['id'].'">';
+            echo $res['item'];
+            echo'</option>';
+            }
+            echo'</select>';
+            ?>
+            </div>
+            <br />
+            
+            <div style="margin-left: 127px; margin-top: 14px;">
+            <input class="sub" name="submit" type="submit"  style="margin-left: -80px; margin-bottom: 40px; width: 170px;" /> 
+            </div>
+
+
+
+         </form>
+</div >
+
+<div style="position: absolute; bottom: -15px;">
+
 <p style="position: relative; left: 50px; font-size: 1.2em; width: 190px;">Total Sales of <?php echo "<p style='position: relative; left: 162px; font-size: 1.2em; bottom: 37px; width: 90px;'>$da</p>" ?> :</p> 
        <?php
-function formatMoney($number, $fractional=false) {
-    if ($fractional) {
-        $number = sprintf('%.2f', $number);
-    }
-    while (true) {
-        $replaced = preg_replace('/(-?\d+)(\d\d\d)/', '$1,$2', $number);
-        if ($replaced != $number) {
-            $number = $replaced;
-        } else {
-            break;
-        }
-    }
-    return $number;
-}     
-$result1 = mysqli_query($db,"select sum(sales) from sales where date='$da'");
+
+$result1 = mysqli_query($db,"select sum(sales) from sales where date='$da' order by date");
 while($row = mysqli_fetch_array($result1,MYSQLI_ASSOC))
 {
     $rrr=$row['sum(sales)'];
@@ -258,13 +297,19 @@ while($row = mysqli_fetch_array($result1,MYSQLI_ASSOC))
 </div>
 
 
+
+<div style="position: relative; top: 145px; right: 20px;">
+
 <form method="post" action="logout.php">
 <button name="logout" style="width: 220px; float: right; background-color: #f44336; border: 1px #bc0000 solid; margin-right: 30px; position: relative; bottom: 350px; " >Logout</button>
 </form>
 
+</div>
 
 
-<div class="content" id="sales" style="position: relative; bottom: 330px; left: 380px; width: 600px; height: 45px; ">
+
+
+<div class="content" id="sales" style="position: relative; bottom: 100px; left: 360px; width: 600px; height: 45px; ">
    <p style="font-size: 1.2em; font-family: helvetica;">Sales between Two Dates. Please enter two dates in YYYY-MM-DD format.</p>
    <form action="" method="post">
    From: <input name="from" type="text" class="tcal"/>
@@ -289,16 +334,29 @@ while($row = mysqli_fetch_array($result1,MYSQLI_ASSOC))
 </div>
 
 
+
 <script type="text/javascript">
 
    // Get the modal
 var modal1 = document.getElementById('addsales');
+var modal2 = document.getElementById('productsoldbyname');
+var modal3 = document.getElementById('itemsoldbydate');
+var modal4 = document.getElementById('totalsales');
 
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
     if (event.target == modal1 ) {
         modal1.style.display = "none";
+    }
+    if (event.target == modal2 ) {
+        modal2.style.display = "none";
+    }
+    if (event.target == modal3 ) {
+        modal3.style.display = "none";
+    }
+    if (event.target == modal4 ) {
+        modal4.style.display = "none";
     }
 }
 
