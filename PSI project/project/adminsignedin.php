@@ -60,11 +60,34 @@ popupWindow2 =window.open('itemsoldbydate.php',"_blank","directories=no, status=
 }
 </script>
 
+
+
+			<script type="text/javascript" src="js/jquery.min.js"></script>
+			<script type="text/javascript" src="js/Chart.min.js"></script>
+			<script type="text/javascript" src="js/dategraph.js"></script>
+			<script type="text/javascript" src="js/namegraph.js"></script>
+
+
+
 <link rel="stylesheet" type="text/css" href="stylesheet2.css">
+
+
+
+<style>
+			.chart-container {
+				width: 590px;
+				height: auto;
+				float: left;
+				
+			}
+</style>
+
+
+
 
 </head>
 
-<body style="background-color:#dedede; margin: 0;padding: 0;">
+<body style="background-color:#f9f9f9; margin: 0;padding: 0;">
 
 
 <div style="border-bottom: 1px solid black;">
@@ -96,71 +119,89 @@ popupWindow2 =window.open('itemsoldbydate.php',"_blank","directories=no, status=
 			<div class=" modal" id="showinventory">
 
 				<div class=" modal-content animate"  style="  width: 1000px; height: 400px; margin-left: 160px; margin-top: 30px;">
-					<div class="imgcontainer">
+					<div class="imgcontainer" style="position: relative; bottom: 20px;">
 		      				<span onclick="document.getElementById('showinventory').style.display='none'" class="close" title="Close Modal" style="position: relative;  left: 480px; ">&times;</span>
 		    		</div>
 
 
-					<table width="100%">
-					               <tr class="head">
-					               <th style="background-color: #bababa;">ID</th>
-					               <th style="background-color: #bababa;">Item</th>
-					               <th style="background-color: #bababa;">Quantity Left</th>
-					               <th style="background-color: #bababa;">Price</th>
-					               <th style="background-color: #bababa;"> Total Sales</th>
-					               </tr>
-					               <?php
-					               $da=date("Y-m-d");
 
-					                  
-					                  $db = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
-					               $query = "select * from inventory order by id";
-					               $sql=mysqli_query($db, $query);
-					               $i=1;
-					               while($row=mysqli_fetch_array($sql,MYSQLI_ASSOC))
-					                        {
-					                        $id=$row['id'];
-					                        $item=$row['item'];
-					                        $qtyleft=$row['qtyleft'];
-					                        $qty_sold=$row['qty_sold'];
-					                        $price=$row['price'];
-					                        $sales=$row['sales'];
 
-					                        if($i%2)
-					                        {
-					                        ?>
-					                        <tr id="<?php echo $id; ?>" class="edit_tr">
-					                                 <?php } 
 
-					                                 else { ?>
-					                                 <tr id="<?php echo $id; ?>" bgcolor="#f2f2f2" class="edit_tr">
-					                                 <?php 
-					                                 }
-					                                 ?>
-					                                 <td>
-					                                          <span class="text" style="padding-left: 50px;"><?php echo $id; ?></span> 
-					                                 </td>
-					                                 <td>
-					                                          <span class="text" style="padding-left: 120px;"><?php echo $item; ?></span> 
-					                                 </td>
-					                                 <td>
-					                                          <span class="text" style="padding-left: 90px;"><?php echo $qtyleft; ?></span>
-					                                 </td>
-					                                 <td>
-					                                          <span class="text" style="padding-left: 70px;"><?php echo $price; ?></span>
-					                                 </td>
-					                                 <td>
-					                                          <span class="text" style="padding-left: 90px;"><?php echo $sales; ?></span>
-					                                 </td>
-					                        </tr>
 
-					                        <?php
-					                        $i++;
-					               }
 
-					               ?>
+<form method='get' style="position: relative; bottom: 20px;">
 
-					</table>
+								               
+								               <?php
+								               $da=date("Y-m-d");
+
+								                  
+								                  $db = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
+
+
+if (!isset($_GET['startrow']) or !is_numeric($_GET['startrow'])) {
+  //we give the value of the starting row to 0 because nothing was found in URL
+  $startrow = 0;
+//otherwise we take the value from the URL
+} else {
+  $startrow = (int)$_GET['startrow'];
+}
+
+
+$fetch = mysqli_query($db, "select * from inventory order by id LIMIT $startrow, 6")or
+die(mysql_error());
+   $num=mysqli_num_rows($fetch);
+        if($num>0)
+        {
+        echo "<table width='100%'>";
+        echo "<tr class='head'>
+								               <th style='background-color: #bababa;'>ID</th>
+								               <th style='background-color: #bababa;'>Item</th>
+								               <th style='background-color: #bababa;'>Quantity Left</th>
+								               <th style='background-color: #bababa;'>Quantity Sold</th>
+								               <th style='background-color: #bababa;'>Price</th>
+								               <th style='background-color: #bababa;'> Total Sales</th>
+								               </tr>";
+        for($i=0;$i<$num;$i++)
+        {
+        $row=mysqli_fetch_array($fetch,MYSQLI_ASSOC);
+        $id=$row['id'];
+        $item=$row['item'];
+        $qtyleft=$row['qtyleft'];
+        $qty_sold=$row['qty_sold'];
+        $price=$row['price'];
+        $sales=$row['sales'];
+        echo "<tr>";
+        echo"<td style='padding-left: 45px;'>$id</td>";
+        echo"<td style='padding-left: 110px;'>$item</td>";
+        echo"<td style='padding-left: 65px;'>$qtyleft</td>";
+        echo"<td style='padding-left: 70px;'>$qty_sold</td>";
+        echo"<td style='padding-left: 50px;'>$price</td>";
+        echo"<td style='padding-left: 50px;'>$sales</td>";
+        echo"</tr>";
+        }//for
+        echo"</table>";
+        }
+//now this is the link..
+        if($startrow+6 <= $num){
+			echo '<a href="'.$_SERVER['PHP_SELF'].'?startrow='.($startrow+6).'" style="color: green; float: right; margin-right: 5px; margin-top: 5px;">Next</a>';
+		}
+$prev = $startrow - 6;
+
+//only print a "Previous" link if a "Next" was clicked
+if ($prev >= 0)
+    echo '<a href="'.$_SERVER['PHP_SELF'].'?startrow='.$prev.'" style="color: red; float: left; margin-left: 5px; margin-top: 5px; ">Previous</a>';
+
+?>
+</form>
+
+
+
+
+
+
+
+
 					<div style="padding: 30px;">
 						<button onclick="document.getElementById('addproitem').style.display='block'" style="width: 200px; " >Update stock of an existing Product</button>
 
@@ -184,60 +225,85 @@ popupWindow2 =window.open('itemsoldbydate.php',"_blank","directories=no, status=
 			<div class=" modal" id="showemployee">
 
 							<div class=" modal-content animate" style="width: 700px; height: 400px; margin-left: 300px; margin-top: 30px;">
-								<div class="imgcontainer">
+								<div class="imgcontainer" style="position: relative; bottom: 20px;">
 		    		      				<span onclick="document.getElementById('showemployee').style.display='none'" class="close" title="Close Modal" style="position: relative;  left: 300px;  bottom: 50px;">&times;</span>
 					    		</div>
 
 
-								<table width="100%">
-								               <tr class="head">
-								               <th style="background-color: #bababa;">ID</th>
-								               <th style="background-color: #bababa;">Username</th>
-								               <th style="background-color: #bababa;">Password</th>
-								               </tr>
+
+
+
+
+<form method='get' style="position: relative; bottom: 20px;">
+
+								               
 								               <?php
 								               $da=date("Y-m-d");
 
 								                  
 								                  $db = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
-								               $query = "select * from employee order by id";
-								               $sql=mysqli_query($db, $query);
-								               $i=1;
-								               while($row=mysqli_fetch_array($sql,MYSQLI_ASSOC))
-								                        {
-								                        $id=$row['id'];
-								                        $username=$row['username'];
-								                        $password=$row['password'];
 
-								                        if($i%2)
-								                        {
-								                        ?>
-								                        <tr id="<?php echo $id; ?>" class="edit_tr">
-								                                 <?php } 
 
-								                                 else { ?>
-								                                 <tr id="<?php echo $id; ?>" bgcolor="#f2f2f2" class="edit_tr">
-								                                 <?php 
-								                                 }
-								                                 ?>
-								                                 <td>
-								                                          <span class="text" style="padding-left: 10px;"><?php echo $id; ?></span> 
-								                                 </td>
-								                                 <td>
-								                                          <span class="text" style="padding-left: 50px;"><?php echo $username; ?></span> 
-								                                 </td>
-								                                 <td>
-								                                          <span class="text" style="padding-left: 50px;"><?php echo $password; ?></span>
-								                                 </td>
-								                        </tr>
+if (!isset($_GET['startrow']) or !is_numeric($_GET['startrow'])) {
+  //we give the value of the starting row to 0 because nothing was found in URL
+  $startrow = 0;
+//otherwise we take the value from the URL
+} else {
+  $startrow = (int)$_GET['startrow'];
+}
 
-								                        <?php
-								                        $i++;
-								               }
 
-								               ?>
+$fetch = mysqli_query($db, "select * from employee order by id LIMIT $startrow, 6")or
+die(mysql_error());
+   $num=mysqli_num_rows($fetch);
+        if($num>0)
+        {
+        echo "<table width='100%'>";
+        echo "<tr class='head'>
+								               <th style='background-color: #bababa;'>ID</th>
+								               <th style='background-color: #bababa;'>Udername</th>
+								               <th style='background-color: #bababa;'>Password</th>
+								               </tr>";
+        for($i=0;$i<$num;$i++)
+        {
+        $row=mysqli_fetch_array($fetch,MYSQLI_ASSOC);
+        $id=$row['id'];
+        $username=$row['username'];
+        $password=$row['password'];
+        echo "<tr>";
+        echo"<td style='padding-left: 10px;'>$id</td>";
+        echo"<td style='padding-left: 50px;'>$username</td>";
+        echo"<td style='padding-left: 50px;'>$password</td>";
+        
+        echo"</tr>";
+        }//for
+        echo"</table>";
+        }
+//now this is the link..
+        if($startrow+6 <= $num){
+			echo '<a href="'.$_SERVER['PHP_SELF'].'?startrow='.($startrow+6).'" style="color: green; float: right; margin-right: 5px; margin-top: 5px;">Next</a>';
+		}
+$prev = $startrow - 6;
 
-								</table>
+//only print a "Previous" link if a "Next" was clicked
+if ($prev >= 0)
+    echo '<a href="'.$_SERVER['PHP_SELF'].'?startrow='.$prev.'" style="color: red; float: left; margin-left: 5px; margin-top: 5px; ">Previous</a>';
+
+?>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+								
 
 									<div style="padding: 30px; margin-left: 80px;">
 										<button onclick="document.getElementById('addemployee').style.display='block'" style="width: 200px; " >Add a new Employee</button>
@@ -253,69 +319,81 @@ popupWindow2 =window.open('itemsoldbydate.php',"_blank","directories=no, status=
 
 
 
+
+
+
+
 						<div class=" modal" id="showsales">
 
 							<div class=" modal-content animate" style="width: 800px; height: 400px; margin-left: 270px; margin-top: 30px;">
-								<div class="imgcontainer">
+								<div class="imgcontainer" style="position: relative; bottom: 20px;">
 		    		      				<span onclick="document.getElementById('showsales').style.display='none'" class="close" title="Close Modal" style="position: relative;  left: 380px;  bottom: 50px;">&times;</span>
 					    		</div>
 
 
-								<table width="100%">
-								               <tr class="head">
-								               <th style="background-color: #bababa;">Date</th>
-								               <th style="background-color: #bababa;">Product ID</th>
-								               <th style="background-color: #bababa;">Quantity</th>
-								               <th style="background-color: #bababa;">Sales</th>
-								               </tr>
+								
+								<form method='get' style="position: relative; bottom: 20px;">
+
+								               
 								               <?php
 								               $da=date("Y-m-d");
 
 								                  
 								                  $db = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
-								               $query = "select * from sales order by date";
-								               $sql=mysqli_query($db, $query);
-								               $i=1;
-								               while($row=mysqli_fetch_array($sql,MYSQLI_ASSOC))
-								                        {
-								                        
-								                        $prodid=$row['product_id'];
-								                        $qty=$row['qty'];
-								                        $date=$row['date'];
-								                        $sales=$row['sales'];
 
-								                        if($i%2)
-								                        {
-								                        ?>
-								                        <tr id="<?php echo $id; ?>" class="edit_tr">
-								                                 <?php } 
 
-								                                 else { ?>
-								                                 <tr id="<?php echo $id; ?>" bgcolor="#f2f2f2" class="edit_tr">
-								                                 <?php 
-								                                 }
-								                                 ?>
-								                                <td>
-								                                          <span class="text" style="padding-left: 100px;"><?php echo $date; ?></span>
-								                                 </td>
-								                                 <td>
-								                                          <span class="text" style="padding-left: 60px;"><?php echo $prodid; ?></span> 
-								                                 </td>
-								                                 <td>
-								                                          <span class="text" style="padding-left: 60px;"><?php echo $qty; ?></span>
-								                                 </td>
-								                                 <td>
-								                                          <span class="text" style="padding-left: 60px;"><?php echo $sales; ?></span>
-								                                 </td>
-								                        </tr>
+if (!isset($_GET['startrow']) or !is_numeric($_GET['startrow'])) {
+  //we give the value of the starting row to 0 because nothing was found in URL
+  $startrow = 0;
+//otherwise we take the value from the URL
+} else {
+  $startrow = (int)$_GET['startrow'];
+}
 
-								                        <?php
-								                        $i++;
-								               }
 
-								               ?>
+$fetch = mysqli_query($db, "select * from sales order by date LIMIT $startrow, 6")or
+die(mysql_error());
+   $num=mysqli_num_rows($fetch);
+        if($num>0)
+        {
+        echo "<table width='100%'>";
+        echo "<tr class='head'>
+								               <th style='background-color: #bababa;'>Date</th>
+								               <th style='background-color: #bababa;'>Product ID</th>
+								               <th style='background-color: #bababa;'>Quantity</th>
+								               <th style='background-color: #bababa;'>Sales</th>
+								               </tr>";
+        for($i=0;$i<$num;$i++)
+        {
+        $row=mysqli_fetch_array($fetch,MYSQLI_ASSOC);
+        $id=$row['product_id'];
+		$qty=$row['qty'];
+		$sales=$row['sales'];
+		$date=$row['date'];
+        echo "<tr>";
+        echo"<td style='padding-left: 100px;'>$date</td>";
+        echo"<td style='padding-left: 80px;'>$id</td>";
+        echo"<td style='padding-left: 75px;'>$qty</td>";
+        echo"<td style='padding-left: 80px;'>$sales</td>";
+        echo"</tr>";
+        }//for
+        echo"</table>";
+        }
+//now this is the link..
+        if($startrow+6 <= $num){
+			echo '<a href="'.$_SERVER['PHP_SELF'].'?startrow='.($startrow+6).'" style="color: green; float: right; margin-right: 5px; margin-top: 5px;">Next</a>';
+		}
+$prev = $startrow - 6;
 
-								</table>
+//only print a "Previous" link if a "Next" was clicked
+if ($prev >= 0)
+    echo '<a href="'.$_SERVER['PHP_SELF'].'?startrow='.$prev.'" style="color: red; float: left; margin-left: 5px; margin-top: 5px; ">Previous</a>';
+
+?>
+</form>
+
+
+
 
 									<div style="padding: 20px; margin-left: 30px;">
 
@@ -681,6 +759,26 @@ $da=date("Y-m-d");
 			</form>
 </div>
 
+
+
+
+
+					<div class="chart-container" style="position: relative; margin: 40px; margin-left: 50px;">
+								<canvas id="mycanvas"></canvas>
+					</div>
+
+
+
+
+					<div class="chart-container" style="position: relative; margin: 40px;">
+								<canvas id="mycanvas2"></canvas>
+					</div>
+
+
+
+
+
+
 <script type="text/javascript">
 
 	// Get the modal
@@ -742,6 +840,9 @@ window.onclick = function(event) {
 
 
 }
+
+
+
 
 </script>
 </body>
