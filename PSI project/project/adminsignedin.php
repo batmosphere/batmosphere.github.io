@@ -105,12 +105,12 @@ popupWindow2 =window.open('itemsoldbydate.php',"_blank","directories=no, status=
 
 </head>
 
-<body style="background-color:#f9f9f9; margin: 0;padding: 0;">
+<body style="background-color:##E9EBEE; margin: 0;padding: 0;">
 
 
 
 
-			<div style="width: 17%; height: 100%;  float: left; padding: 20px; ">
+			<div style="width: 15%; height: 100%;  float: left; padding: 20px; margin-right: 20px;">
 
 
 						<h2 style="color: black; float: left; font-size: 2.3em; margin-left: 30px; margin-top: 0px; margin-bottom: 20px; ">   <?php echo $login_session; ?>'s Dashboard</h2> 
@@ -159,7 +159,8 @@ popupWindow2 =window.open('itemsoldbydate.php',"_blank","directories=no, status=
 
 			<div style="width: 32%; height: 100%; float: left; margin-top: 20px;">
 				<div style="background-color: #FDDFDF; border: 1px solid #F1A899;  margin-top: 20px; margin-bottom: 20px; margin-left: 5px; margin-right: 20px;  border-radius: 8px; padding: 10px;">
-					<h2 style="margin-left: 30px;">Products low on Stock</h2>
+					<h2 style="margin-left: 30px; margin-bottom: -10px;">Products low on Stock </h2>
+					<p style="margin-left: 30px;">(Less than 50 Units)</p>
 
 
 					<ul>
@@ -179,7 +180,7 @@ popupWindow2 =window.open('itemsoldbydate.php',"_blank","directories=no, status=
 				   }
 				   else
 				   {
-				   		echo '<p style="font-size: 1.5em; "> None</p>';
+				   		echo '<p style="font-size: 1.5em; ">None. All products are properly stocked.</p>';
 				   }
 
 				   
