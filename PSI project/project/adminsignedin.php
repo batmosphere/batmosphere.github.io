@@ -30,6 +30,24 @@ session_start();
 ajax/libs/jquery/1.5/jquery.min.js"></script>
 
 
+<link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+         rel = "stylesheet">
+      <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+      
+      <!-- Javascript -->
+      <script>
+         $(function() {
+            $( "#datepicker" ).datepicker({
+               
+               dateFormat:"yy-mm-dd",
+              
+            });
+         });
+      </script>.
+
+
+
 <script type="text/javascript">
 
 var popupWindow=null;
@@ -90,28 +108,97 @@ popupWindow2 =window.open('itemsoldbydate.php',"_blank","directories=no, status=
 <body style="background-color:#f9f9f9; margin: 0;padding: 0;">
 
 
-<div style="border-bottom: 1px solid black;">
-		<h1>Welcome <?php echo $login_session; ?></h1> 
-</div>
 
 
-<div style="margin-left: 80px; margin-top: 50px; width: 1200px; height: 80px">
-		
-		  <button onclick="document.getElementById('addadmin').style.display='block'" style="width: 200px; height: 80px ;float: left; " >Create a new Admin</button>
+			<div style="width: 17%; height: 100%;  float: left; padding: 20px; ">
 
-		  <button onclick="document.getElementById('showinventory').style.display='block'" style="width: 200px; float: left; height: 80px;" >Show Inventory</button>
 
-		  <button onclick="document.getElementById('showemployee').style.display='block'" style="width: 200px; float: left; height: 80px;" >Show Employees</button>
+						<h2 style="color: black; float: left; font-size: 2.3em; margin-left: 30px; margin-top: 0px; margin-bottom: 20px; ">   <?php echo $login_session; ?>'s Dashboard</h2> 
+				
 
-		  <button onclick="document.getElementById('showsales').style.display='block'" style="width: 200px; float: left; height: 80px;" >Show Sales</button>
+							<button onclick="document.getElementById('addadmin').style.display='block'" style="width: 200px; height: 80px ;float: left; " 	>Create a new Admin</button>
 
-		  
-		   <form method="post" action="logout.php" style="float: left;">
-		   <button  style="width: 200px; background-color: #f44336; border: 1px #bc0000 solid; height: 80px;" ><a href="logout.php">Logout</a></button>
-		   </form>
-		
-		
-</div>
+						  <button onclick="document.getElementById('showinventory').style.display='block'" style="width: 200px; float: left; height: 80px;" >Show Inventory</button>
+
+						  <button onclick="document.getElementById('showemployee').style.display='block'" style="width: 200px; float: left; height: 80px;" >Show Employees</button>
+
+						  <button onclick="document.getElementById('showsales').style.display='block'" style="width: 200px; float: left; height: 80px;" >Show Sales</button>
+
+						  
+						   <form method="post" action="logout.php" style="float: left;">
+						   <button  style="width: 200px; background-color: #f44336; border: 1px #bc0000 solid; height: 80px;" ><a href="logout.php">Logout</a></button>
+						   </form>
+
+
+			</div>
+
+
+
+
+
+			<div style="width: 45%; height: 100%;  padding: 20px; float: left; ">
+				
+				<div class="chart-container" style=" margin-bottom: 10px;  ">
+								<canvas id="mycanvas"></canvas>
+					</div>
+
+
+
+
+					<div class="chart-container" style=" margin-top:  10px;  ">
+								<canvas id="mycanvas2"></canvas>
+					</div>
+
+			</div>
+
+
+
+
+
+
+
+			<div style="width: 32%; height: 100%; float: left; margin-top: 20px;">
+				<div style="background-color: #FDDFDF; border: 1px solid #F1A899;  margin-top: 20px; margin-bottom: 20px; margin-left: 5px; margin-right: 20px;  border-radius: 8px; padding: 10px;">
+					<h2 style="margin-left: 30px;">Products low on Stock</h2>
+
+
+					<ul>
+   
+
+				   <?php
+				   $CRITICAL=50;
+				   $sql2=mysqli_query($db,"select * from inventory where qtyleft<='$CRITICAL'");
+				   $num2=mysqli_num_rows($sql2);
+				   if($num2)
+				   {	
+						
+					   	while($row2=mysqli_fetch_array($sql2,MYSQLI_ASSOC))
+					   {
+					   echo '<li style="list-style:none; font-size: 1.5em; margin: 10px; ">'.$row2['item'].'';
+					   }
+				   }
+				   else
+				   {
+				   		echo '<p style="font-size: 1.5em; "> None</p>';
+				   }
+
+				   
+				   ?>
+   </ul>
+
+
+
+				</div>
+
+				<div style="background-color: #FFFA90; border: 1px solid #DAD55E;  margin-top: 20px; margin-bottom: 20px; margin-left: 5px; margin-right: 20px;  border-radius: 8px; padding: 10px;">
+					<h2 style="margin-left: 30px;">Messages from Employees</h2>
+				</div>
+
+			</div>
+
+
+
+
 
 
 
@@ -711,8 +798,8 @@ $da=date("Y-m-d");
 			    </div>
 
 			    <div class="container">
-			      <label style="font-size: 1.2em;"><b> Please enter the Date to be searched</b></label>
-			      <input type="text" placeholder="Enter Date" name="date" required>
+			      <label style="font-size: 1.2em;"><b> Please enter the Date to be searched for</b></label>
+			      <input id="datepicker"  type="text"  name="date" required >
 
 			        
 			      <input class="sub" name="submit" type="submit"  style="margin-left: 20px; width: 140px;" />		      
@@ -763,16 +850,7 @@ $da=date("Y-m-d");
 
 
 
-					<div class="chart-container" style="position: relative; margin: 40px; margin-left: 50px;">
-								<canvas id="mycanvas"></canvas>
-					</div>
-
-
-
-
-					<div class="chart-container" style="position: relative; margin: 40px;">
-								<canvas id="mycanvas2"></canvas>
-					</div>
+					
 
 
 
@@ -840,6 +918,8 @@ window.onclick = function(event) {
 
 
 }
+
+
 
 
 
