@@ -16,7 +16,7 @@ if(!$mysqli){
 }
 
 //query to get data from the table
-$query = sprintf("select date, sum(sales) as sales FROM sales group by date");
+$query = sprintf("SELECT item, sales FROM inventory");
 
 //execute query
 $result = $mysqli->query($query);

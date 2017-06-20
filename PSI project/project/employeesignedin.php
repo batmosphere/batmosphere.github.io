@@ -21,8 +21,24 @@ session_start();
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Inventory System</title>
-<script type="text/javascript" src="http://ajax.googleapis.com/
-ajax/libs/jquery/1.5/jquery.min.js"></script>
+<link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+         rel = "stylesheet">
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+      <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+      
+      <!-- Javascript -->
+     <script type="text/javascript">
+          $.noConflict();
+          jQuery(document).ready(function ($) {
+              $('#from').datepicker({
+               dateFormat:"yy-mm-dd"
+              });
+
+              $('#to').datepicker({
+               dateFormat:"yy-mm-dd"
+              });
+          });
+</script>
 
 
 <link rel="stylesheet" type="text/css" href="stylesheet2.css" media="screen">
@@ -310,10 +326,10 @@ while($row = mysqli_fetch_array($result1,MYSQLI_ASSOC))
 
 
 <div class="content" id="sales" style="position: relative; bottom: 100px; left: 360px; width: 600px; height: 45px; ">
-   <p style="font-size: 1.2em; font-family: helvetica;">Sales between Two Dates. Please enter two dates in YYYY-MM-DD format.</p>
+   <p style="font-size: 1.2em; font-family: helvetica;">Sales between Two Dates.</p>
    <form action="" method="post">
-   From: <input name="from" type="text" class="tcal"/>
-      To: <input name="to" type="text" class="tcal"/>
+   From: <input id="from" name="from" type="text" class="tcal"/>
+      To: <input id="to" name="to" type="text" class="tcal"/>
      <button name="submit" type="submit">Search</button>
      </form><br />
      <?php

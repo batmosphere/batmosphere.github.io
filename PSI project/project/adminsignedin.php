@@ -26,25 +26,24 @@ session_start();
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Inventory System</title>
-<script type="text/javascript" src="http://ajax.googleapis.com/
-ajax/libs/jquery/1.5/jquery.min.js"></script>
+
 
 
 <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
          rel = "stylesheet">
-      <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
       <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
       
       <!-- Javascript -->
-      <script>
-         $(function() {
-            $( "#datepicker" ).datepicker({
-               
-               dateFormat:"yy-mm-dd",
-              
-            });
-         });
-      </script>.
+     <script type="text/javascript">
+		    $.noConflict();
+		    jQuery(document).ready(function ($) {
+		        $('#datepicker').datepicker({
+		        	dateFormat:"yy-mm-dd"
+		        });
+		    });
+</script>
+
 
 
 
@@ -106,7 +105,6 @@ popupWindow2 =window.open('itemsoldbydate.php',"_blank","directories=no, status=
 </head>
 
 <body style="background-color:##E9EBEE; margin: 0;padding: 0;">
-
 
 
 
