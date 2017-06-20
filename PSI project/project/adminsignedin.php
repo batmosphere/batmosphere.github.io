@@ -29,7 +29,7 @@ session_start();
 
 
 
-<link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+<link href = "https://code.jquery.com/ui/1.10.4/themes/hot-sneaks/jquery-ui.css"
          rel = "stylesheet">
       <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
       <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
@@ -104,27 +104,27 @@ popupWindow2 =window.open('itemsoldbydate.php',"_blank","directories=no, status=
 
 </head>
 
-<body style="background-color:##E9EBEE; margin: 0;padding: 0;">
+<body style="background-color:#606060; margin: 0;padding: 0;">
 
 
 
 			<div style="width: 15%; height: 100%;  float: left; padding: 20px; margin-right: 20px;">
 
 
-						<h2 style="color: black; float: left; font-size: 2.3em; margin-left: 30px; margin-top: 0px; margin-bottom: 20px; ">   <?php echo $login_session; ?>'s Dashboard</h2> 
+						<h2 style="color: white; float: left; font-size: 2.3em; margin-left: 30px; margin-top: 0px; margin-bottom: 20px; ">   <?php echo $login_session; ?>'s Dashboard</h2> 
 				
 
-							<button onclick="document.getElementById('addadmin').style.display='block'" style="width: 200px; height: 80px ;float: left; " 	>Create a new Admin</button>
+							<button onclick="document.getElementById('addadmin').style.display='block'" style="width: 200px; height: 80px ;float: left; " 	><strong>Create a new Admin</strong></button>
 
-						  <button onclick="document.getElementById('showinventory').style.display='block'" style="width: 200px; float: left; height: 80px;" >Show Inventory</button>
+						  <button onclick="document.getElementById('showinventory').style.display='block'" style="width: 200px; float: left; height: 80px;" ><strong>Show Inventory</strong></button>
 
-						  <button onclick="document.getElementById('showemployee').style.display='block'" style="width: 200px; float: left; height: 80px;" >Show Employees</button>
+						  <button onclick="document.getElementById('showemployee').style.display='block'" style="width: 200px; float: left; height: 80px;" ><strong>Show Employees</strong></button>
 
-						  <button onclick="document.getElementById('showsales').style.display='block'" style="width: 200px; float: left; height: 80px;" >Show Sales</button>
+						  <button onclick="document.getElementById('showsales').style.display='block'" style="width: 200px; float: left; height: 80px;" ><strong>Show Sales</strong></button>
 
 						  
 						   <form method="post" action="logout.php" style="float: left;">
-						   <button  style="width: 200px; background-color: #f44336; border: 1px #bc0000 solid; height: 80px;" ><a href="logout.php">Logout</a></button>
+						   <button  style="width: 200px; background-color: #f44336; border: 1px #bc0000 solid; height: 80px;" ><a href="logout.php"><strong>Logout</strong></a></button>
 						   </form>
 
 
@@ -134,9 +134,9 @@ popupWindow2 =window.open('itemsoldbydate.php',"_blank","directories=no, status=
 
 
 
-			<div style="width: 45%; height: 100%;  padding: 20px; float: left; ">
+			<div style="width: 45%; height: 100%;  padding: 10px; float: left; background-color: white; border: 1px solid #E9EBEE; border-radius: 15px; margin-left: 10px; margin-top: 10px;" >
 				
-				<div class="chart-container" style=" margin-bottom: 10px;  ">
+				<div  class="chart-container" style=" margin-bottom: 10px;  ">
 								<canvas id="mycanvas"></canvas>
 					</div>
 
@@ -155,7 +155,7 @@ popupWindow2 =window.open('itemsoldbydate.php',"_blank","directories=no, status=
 
 
 
-			<div style="width: 32%; height: 100%; float: left; margin-top: 20px;">
+			<div style="width: 32%; height: 100%; float: left; margin-top: 20px; margin-left: 15px;">
 				<div style="background-color: #FDDFDF; border: 1px solid #F1A899;  margin-top: 20px; margin-bottom: 20px; margin-left: 5px; margin-right: 20px;  border-radius: 8px; padding: 10px;">
 					<h2 style="margin-left: 30px; margin-bottom: -10px;">Products low on Stock </h2>
 					<p style="margin-left: 30px;">(Less than 50 Units)</p>
@@ -173,7 +173,7 @@ popupWindow2 =window.open('itemsoldbydate.php',"_blank","directories=no, status=
 						
 					   	while($row2=mysqli_fetch_array($sql2,MYSQLI_ASSOC))
 					   {
-					   echo '<li style="list-style:none; font-size: 1.5em; margin: 10px; ">'.$row2['item'].'';
+					   echo '<li style="list-style:none; font-size: 1.5em; margin-left: 10px; ">'.$row2['item'].' = '.$row2['qtyleft'].' Units';
 					   }
 				   }
 				   else
@@ -190,7 +190,33 @@ popupWindow2 =window.open('itemsoldbydate.php',"_blank","directories=no, status=
 				</div>
 
 				<div style="background-color: #FFFA90; border: 1px solid #DAD55E;  margin-top: 20px; margin-bottom: 20px; margin-left: 5px; margin-right: 20px;  border-radius: 8px; padding: 10px;">
-					<h2 style="margin-left: 30px;">Messages from Employees</h2>
+					<h2 style="margin-left: 30px;">Sales Trends</h2>
+
+					<ul>
+   
+
+				   <?php
+				   $sql3=mysqli_query($db,"select max(sales) as max from inventory");
+				   $row3=mysqli_fetch_array($sql3,MYSQLI_ASSOC);
+				   $max = $row3['max'];
+				   $sql2=mysqli_query($db,"select item from inventory where sales = '$max'");
+				   $num2=mysqli_num_rows($sql2);
+				   if($num2>0)
+				   {	
+						
+					   	while($row2=mysqli_fetch_array($sql2,MYSQLI_ASSOC))
+					   {
+					   echo '<li style="list-style:none; font-size: 1.5em; margin-left: -10px; ">Stock more '.$row2['item'].' to generate more profits based on sales trends';
+					   }
+				   }
+				   else
+				   {
+				   		echo '<p style="font-size: 1.5em; ">No sales trends generated.</p>';
+				   }
+
+				   
+				   ?>
+   </ul>
 				</div>
 
 			</div>

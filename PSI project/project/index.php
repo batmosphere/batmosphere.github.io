@@ -17,7 +17,7 @@
 
     <link rel="stylesheet" type="text/css" href="style1.css">
 </head>
-<body style="background-color: #f9f9f9;">
+<body style="background-color: #606060;">
 
 
 	<div id="page" style="background-color: #efefef;">

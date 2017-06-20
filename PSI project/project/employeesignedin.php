@@ -21,7 +21,7 @@ session_start();
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Inventory System</title>
-<link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+<link href = "https://code.jquery.com/ui/1.10.4/themes/hot-sneaks/jquery-ui.css"
          rel = "stylesheet">
       <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
       <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
