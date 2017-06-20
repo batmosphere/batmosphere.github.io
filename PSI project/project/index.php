@@ -3,9 +3,9 @@
 	session_start();
 	
 	//Unset the variables stored in session
-	unset($_SESSION['SESS_MEMBER_ID']);
-	unset($_SESSION['SESS_FIRST_NAME']);
-	unset($_SESSION['SESS_LAST_NAME']);
+	unset($_SESSION['id']);
+	unset($_SESSION['username']);
+	
 ?>
 
 
@@ -17,16 +17,17 @@
 
     <link rel="stylesheet" type="text/css" href="style1.css">
 </head>
-<body style="background-color: #606060;">
+<body style="background-color: #333333;">
 
 
 	<div id="page" style="background-color: #efefef;">
-		
-
+		  
+        
 		<h2 style="color: black;">Welcome to Inventory Management System</h2>
 
-		<button onclick="document.getElementById('adminlogin').style.display='block'" style="width: 200px; margin-left: 170px" >Admin Login</button>
-		<button onclick="document.getElementById('employeelogin').style.display='block'" style="width: 200px;" >Employee Login</button>
+        
+		<button onclick="document.getElementById('adminlogin').style.display='block'" style="width: 200px; margin-left: 170px ; font-weight: bolder;" >Admin Login</button>
+		<button onclick="document.getElementById('employeelogin').style.display='block'" style="width: 200px; font-weight: bolder;" >Employee Login</button>
 
 
 	</div>

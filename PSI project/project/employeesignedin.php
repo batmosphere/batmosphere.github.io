@@ -37,6 +37,10 @@ session_start();
               $('#to').datepicker({
                dateFormat:"yy-mm-dd"
               });
+
+              $('#datepicker').datepicker({
+               dateFormat:"yy-mm-dd"
+              });
           });
 </script>
 
@@ -44,8 +48,18 @@ session_start();
 <link rel="stylesheet" type="text/css" href="stylesheet2.css" media="screen">
 <link rel="stylesheet" type="text/css" href="stylesheet4.css" media="screen">
 
-<style>
+         <script type="text/javascript" src="js/jquery.min.js"></script>
+         <script type="text/javascript" src="js/Chart.min.js"></script>
+         <script type="text/javascript" src="js/dategraph.js"></script>
+         <script type="text/javascript" src="js/namegraph.js"></script>
 
+<style>
+   .chart-container {
+            width: 50%;
+            height: auto;
+            float: left;
+            
+         }
 </style>
 
 <script type="text/javascript">
@@ -61,81 +75,142 @@ popupWindow =window.open('printform.php',"_blank","directories=no, status=no, me
 </script>
 </head>
 
-<body bgcolor="#dedede">
+<body style="background-color:#333333; margin: 0;padding: 0;">
 
 
 
-               <div style="border-bottom: 1px solid black;">
-                     <h1>Welcome <?php echo $login_session; ?></h1> 
+                  <div style="width: 15%; height: 100%;  float: left; padding: 20px; margin-right: 20px;">
+
+
+                     <h2 style="color: white; float: left; font-size: 2.3em; margin-left: 30px; margin-top: 0px; margin-bottom: 20px; ">   <?php echo $login_session; ?>'s Dashboard</h2> 
+            
+
+                    <button onclick="document.getElementById('addsales').style.display='block'" style="width: 200px; float: left;  font-weight: bold;" >Purchase Inventory item</button>
+
+                     <button onclick="document.getElementById('productsoldbyname').style.display='block'" style="width: 200px; float: left; font-weight: bold;" >Calculate Sales of a particular Product</button>
+
+                     <button onclick="document.getElementById('itemsoldbydate').style.display='block'" style="width: 200px; float: left; font-weight: bold;" >Calculate Sales on a particular Date</button>
+
+                     <button onclick="document.getElementById('totalsales').style.display='block'" style="width: 200px; float: left; font-weight: bold;" >Calculate Total sales</button>
+
+                     <button onclick="document.getElementById('twodates').style.display='block'" style="width: 200px; float: left; font-weight: bold;" >Calculate sales between two dates</button>
+
+                     
+                     <form method="post" action="logout.php">
+                     <button name="logout" style="width: 200px; float: right; background-color: #f44336; border: 1px #bc0000 solid; font-weight: bold; float: left;" >Logout</button>
+                     </form>
+
+
                </div>
 
 
-<br />
-<table width="100%">
-               <tr class="head">
-               <th>ID</th>
-               <th>Item</th>
-               <th>Quantity Left</th>
-               <th>Price</th>
-               <th> Total Sales</th>
-               </tr>
+
+
+
+               <div style="float: left; width: 60%; background-color: white; border-radius: 15px; margin: 10px; padding-top: 20px; padding-bottom: 20px;">
+                  
+                  
+               
                <?php
                $da=date("Y-m-d");
 
                   
                   $db = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
-               $query = "select * from inventory order by id";
-               $sql=mysqli_query($db, $query);
-               $i=1;
-               while($row=mysqli_fetch_array($sql,MYSQLI_ASSOC))
-                        {
-                        $id=$row['id'];
-                        $item=$row['item'];
-                        $qtyleft=$row['qtyleft'];
-                        $qty_sold=$row['qty_sold'];
-                        $price=$row['price'];
-                        $sales=$row['sales'];
-
-                        if($i%2)
-                        {
-                        ?>
-                        <tr id="<?php echo $id; ?>" class="edit_tr">
-                                 <?php } 
-
-                                 else { ?>
-                                 <tr id="<?php echo $id; ?>" bgcolor="#f2f2f2" class="edit_tr">
-                                 <?php 
-                                 }
-                                 ?>
-                                 <td>
-                                          <span class="text"><?php echo $id; ?></span> 
-                                 </td>
-                                 <td>
-                                          <span class="text"><?php echo $item; ?></span> 
-                                 </td>
-                                 <td>
-                                          <span class="text"><?php echo $qtyleft; ?></span>
-                                 </td>
-                                 <td>
-                                          <span class="text"><?php echo $price; ?></span>
-                                 </td>
-                                 <td>
-                                          <span class="text"><?php echo $sales; ?></span>
-                                 </td>
-                        </tr>
-
-                        <?php
-                        $i++;
+                  if (!isset($_GET['startrow']) or !is_numeric($_GET['startrow'])) {
+  //we give the value of the starting row to 0 because nothing was found in URL
+                 $startrow = 0;
+               //otherwise we take the value from the URL
+               } else {
+                 $startrow = (int)$_GET['startrow'];
                }
 
+
+               $fetch = mysqli_query($db, "select * from inventory order by id LIMIT $startrow, 6")or
+               die(mysql_error());
+                  $num=mysqli_num_rows($fetch);
+                       if($num>0)
+                       {
+                       echo "<table style='width:100%; border: none; '>";
+                       echo "<tr class='head'>
+                                                      <th style='background-color: #bababa; padding-left: 35px;'>ID</th>
+                                                      <th style='background-color: #bababa; padding-left: 50px;'>Item</th>
+                                                      <th style='background-color: #bababa; padding-left: 40px;'>Quantity Left</th>
+                                                      <th style='background-color: #bababa; padding-left: 40px;'>Quantity Sold</th>
+                                                      <th style='background-color: #bababa; padding-left: 30px;'>Price</th>
+                                                      <th style='background-color: #bababa; padding-left: 30px;'> Total Sales</th>
+                                                      </tr>";
+                       for($i=0;$i<$num;$i++)
+                       {
+                       $row=mysqli_fetch_array($fetch,MYSQLI_ASSOC);
+                       $id=$row['id'];
+                       $item=$row['item'];
+                       $qtyleft=$row['qtyleft'];
+                       $qty_sold=$row['qty_sold'];
+                       $price=$row['price'];
+                       $sales=$row['sales'];
+                       echo "<tr>";
+                       echo"<td style='padding-left: 30px;'>$id</td>";
+                       echo"<td style='padding-left: 50px;'>$item</td>";
+                       echo"<td style='padding-left: 65px;'>$qtyleft</td>";
+                       echo"<td style='padding-left: 70px;'>$qty_sold</td>";
+                       echo"<td style='padding-left: 40px;'>$price</td>";
+                       echo"<td style='padding-left: 50px;'>$sales</td>";
+                       echo"</tr>";
+                       }//for
+                       echo"</table>";
+                       }
+               //now this is the link..
+                       if($startrow+6 < $num){
+                        echo '<a href="'.$_SERVER['PHP_SELF'].'?startrow='.($startrow+6).'" style="color: green; float: right; margin-right: 5px; margin-top: 5px;">Next</a>';
+                     }
+               $prev = $startrow - 6;
+
+               //only print a "Previous" link if a "Next" was clicked
+               if ($prev >= 0)
+                   echo '<a href="'.$_SERVER['PHP_SELF'].'?startrow='.$prev.'" style="color: red; float: left; margin-left: 5px; margin-top: 5px; ">Previous</a>';
+
                ?>
-
-</table>
-
-<br />
+               </div>
 
 
-<button onclick="document.getElementById('addsales').style.display='block'" style="width: 200px; position: relative; left: 20px; " >Purchase Inventory item</button>
+
+
+
+
+               <div style="width: 16%; margin-top: 50px; float: left; background-color: white; border-radius: 15px; padding: 10px; margin-left: 7px;">
+                  <p style=" font-size: 1.4em; margin-left: 40px;">Total Sales of <?php echo "<p style='font-size: 1.4em; margin-left: 40px; font-weight: bold; '>$da</p>" ?></p> 
+                         <?php
+
+                  $result1 = mysqli_query($db,"select sum(sales) from sales where date='$da' order by date");
+                  while($row = mysqli_fetch_array($result1,MYSQLI_ASSOC))
+                  {
+                      $rrr=$row['sum(sales)'];
+                      $x = formatMoney($rrr, true);
+                     echo "<p style='font-weight: bold; font-size: 1.4em; margin-left: 40px;'><strong>Rupees $x</strong></p>";
+                   }
+                   ?>
+
+                   <button onclick="javascript:child_open()" style="width: 200px; float: left; margin-left: 10px; font-weight: bold;" >Print Today's Receipt</button>
+
+               </div>
+
+
+
+               <div style="width: 77%;   padding: 10px; float: left; background-color: white; border: 1px solid #E9EBEE; border-radius: 15px; margin-left: 10px; margin-top: 10px;" >
+            
+            <div  class="chart-container" style=" margin-bottom: 10px;  ">
+                        <canvas id="mycanvas"></canvas>
+               </div>
+
+
+
+
+               <div class="chart-container" style=" margin-top:  10px;  ">
+                        <canvas id="mycanvas2"></canvas>
+               </div>
+
+         </div>
+
 
 
                <div class=" modal" id="addsales" >
@@ -173,21 +248,6 @@ popupWindow =window.open('printform.php',"_blank","directories=no, status=no, me
 
 ?>
 
-
-
-
-
-                           <div style="padding: 20px; margin-left: 30px; position: relative; bottom: 102px; left: 245px; width: 700px;">
-
-                           <button onclick="document.getElementById('productsoldbyname').style.display='block'" style="width: 200px; " >Calculate Sales of a particular Product</button>
-
-                                 <button onclick="document.getElementById('itemsoldbydate').style.display='block'" style="width: 200px; " >Calculate Sales on a particular Date</button>
-
-                              <button onclick="document.getElementById('totalsales').style.display='block'" style="width: 200px; " >Calculate Total sales</button>
-
-
-                                 
-                              </div>
 
 
 
@@ -247,7 +307,7 @@ popupWindow =window.open('printform.php',"_blank","directories=no, status=no, me
 
              <div class="container">
                <label style="font-size: 1.2em;"><b> Please enter the Date to be searched</b></label>
-               <input type="text" placeholder="Enter Date" name="date" required>
+               <input id="datepicker" type="text" placeholder="Enter Date" name="date" required>
 
                  
                <input class="sub" name="submit" type="submit"  style="margin-left: 20px; width: 140px;" />           
@@ -294,47 +354,24 @@ popupWindow =window.open('printform.php',"_blank","directories=no, status=no, me
          </form>
 </div >
 
-<div style="position: absolute; bottom: -15px;">
 
-<p style="position: relative; left: 50px; font-size: 1.2em; width: 190px;">Total Sales of <?php echo "<p style='position: relative; left: 162px; font-size: 1.2em; bottom: 37px; width: 90px;'>$da</p>" ?> :</p> 
-       <?php
+<div id="twodates" class="modal" >
+           
+           <form class="modal-content animate" method="post" action="">
+             <div class="imgcontainer">
+               <span onclick="document.getElementById('twodates').style.display='none'" class="close" title="Close Modal">&times;</span>
+            </div>
 
-$result1 = mysqli_query($db,"select sum(sales) from sales where date='$da' order by date");
-while($row = mysqli_fetch_array($result1,MYSQLI_ASSOC))
-{
-    $rrr=$row['sum(sales)'];
-    $x = formatMoney($rrr, true);
-   echo "<p class='dailysales'><strong>Rupees $x</strong></p>";
- }
-
-?></b><br /><br />
-
-<button onclick="javascript:child_open()" style="width: 200px; position: relative; left: 20px; bottom: 70px;" >Print Receipt</button>
-</div>
-
-
-
-<div style="position: relative; top: 145px; right: 20px;">
-
-<form method="post" action="logout.php">
-<button name="logout" style="width: 220px; float: right; background-color: #f44336; border: 1px #bc0000 solid; margin-right: 30px; position: relative; bottom: 350px; " >Logout</button>
-</form>
-
-</div>
-
-
-
-
-<div class="content" id="sales" style="position: relative; bottom: 100px; left: 360px; width: 600px; height: 45px; ">
-   <p style="font-size: 1.2em; font-family: helvetica;">Sales between Two Dates.</p>
-   <form action="" method="post">
-   From: <input id="from" name="from" type="text" class="tcal"/>
-      To: <input id="to" name="to" type="text" class="tcal"/>
-     <button name="submit" type="submit">Search</button>
-     </form><br />
-     <?php
-     if(isset($_POST['submit']))
-     {      
+             <div class="container">
+               <p style="font-size: 1.2em; font-family: helvetica;">Sales between Two Dates.</p>
+            
+            From: <input id="from" name="from" type="text" class="tcal"/> <br />
+               To: <input id="to" name="to" type="text" class="tcal"/>
+              <button name="submit" type="submit">Search</button>
+              </form><br />
+              <?php
+              if(isset($_POST['submit']))
+              {      
             echo "<p style='width: 100px; font-size: 1.2em;'> Total Sales : </p>";
             $a=$_POST['from'];
             $b=$_POST['to'];
@@ -346,8 +383,14 @@ while($row = mysqli_fetch_array($result1,MYSQLI_ASSOC))
                echo "<p style='position: relative;  left: 100px; bottom: 38px; width: 220px; font-size: 1.2em;'><strong>Rupees $x</strong></p>";
              }
             }
-      ?>
-</div>
+      ?>          
+             </div>
+
+             
+               
+             </div>
+           </form>
+         </div>
 
 
 
@@ -356,8 +399,9 @@ while($row = mysqli_fetch_array($result1,MYSQLI_ASSOC))
    // Get the modal
 var modal1 = document.getElementById('addsales');
 var modal2 = document.getElementById('productsoldbyname');
-var modal3 = document.getElementById('itemsoldbydate');
 var modal4 = document.getElementById('totalsales');
+var modal3 = document.getElementById('itemsoldbydate');
+var modal5 = document.getElementById('twodates');
 
 
 // When the user clicks anywhere outside of the modal, close it
@@ -373,6 +417,9 @@ window.onclick = function(event) {
     }
     if (event.target == modal4 ) {
         modal4.style.display = "none";
+    }
+    if (event.target == modal5 ) {
+        modal5.style.display = "none";
     }
 }
 

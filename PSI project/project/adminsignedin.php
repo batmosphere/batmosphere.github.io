@@ -24,7 +24,7 @@ session_start();
 
 
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="CACHE-CONTROL" content="NO-CACHE" />
 <title>Inventory System</title>
 
 
@@ -104,23 +104,23 @@ popupWindow2 =window.open('itemsoldbydate.php',"_blank","directories=no, status=
 
 </head>
 
-<body style="background-color:#606060; margin: 0;padding: 0;">
+<body style="background-color:#333333; margin: 0;padding: 0;">
 
 
 
 			<div style="width: 15%; height: 100%;  float: left; padding: 20px; margin-right: 20px;">
 
 
-						<h2 style="color: white; float: left; font-size: 2.3em; margin-left: 30px; margin-top: 0px; margin-bottom: 20px; ">   <?php echo $login_session; ?>'s Dashboard</h2> 
+						<h2 style="color: white; float: left; font-size: 2.3em; margin-left: 40px; margin-top: 0px; margin-bottom: 20px; ">   <?php echo $login_session; ?>'s Dashboard</h2> 
 				
 
-							<button onclick="document.getElementById('addadmin').style.display='block'" style="width: 200px; height: 80px ;float: left; " 	><strong>Create a new Admin</strong></button>
+							<button onclick="document.getElementById('addadmin').style.display='block'" style="width: 200px; height: 80px ;float: left;  font-size: 1.3em;" 	><strong>Create a new Admin</strong></button>
 
-						  <button onclick="document.getElementById('showinventory').style.display='block'" style="width: 200px; float: left; height: 80px;" ><strong>Show Inventory</strong></button>
+						  <button onclick="document.getElementById('showinventory').style.display='block'" style="width: 200px; float: left; height: 80px; font-size: 1.3em;" ><strong>Show Inventory</strong></button>
 
-						  <button onclick="document.getElementById('showemployee').style.display='block'" style="width: 200px; float: left; height: 80px;" ><strong>Show Employees</strong></button>
+						  <button onclick="document.getElementById('showemployee').style.display='block'" style="width: 200px; float: left; height: 80px; font-size: 1.3em;" ><strong>Show Employees</strong></button>
 
-						  <button onclick="document.getElementById('showsales').style.display='block'" style="width: 200px; float: left; height: 80px;" ><strong>Show Sales</strong></button>
+						  <button onclick="document.getElementById('showsales').style.display='block'" style="width: 200px; float: left; height: 80px; font-size: 1.3em;" ><strong>Show Sales</strong></button>
 
 						  
 						   <form method="post" action="logout.php" style="float: left;">
@@ -173,12 +173,12 @@ popupWindow2 =window.open('itemsoldbydate.php',"_blank","directories=no, status=
 						
 					   	while($row2=mysqli_fetch_array($sql2,MYSQLI_ASSOC))
 					   {
-					   echo '<li style="list-style:none; font-size: 1.5em; margin-left: 10px; ">'.$row2['item'].' = '.$row2['qtyleft'].' Units';
+					   echo '<li style="list-style:none; font-size: 1.7em; margin-left: 10px; ">'.$row2['item'].' = '.$row2['qtyleft'].' Units';
 					   }
 				   }
 				   else
 				   {
-				   		echo '<p style="font-size: 1.5em; ">None. All products are properly stocked.</p>';
+				   		echo '<p style="font-size: 1.7em; ">None. All products are properly stocked.</p>';
 				   }
 
 				   
@@ -201,12 +201,24 @@ popupWindow2 =window.open('itemsoldbydate.php',"_blank","directories=no, status=
 				   $max = $row3['max'];
 				   $sql2=mysqli_query($db,"select item from inventory where sales = '$max'");
 				   $num2=mysqli_num_rows($sql2);
-				   if($num2>0)
+
+				   $sql4=mysqli_query($db,"select min(sales) as min from inventory");
+				   $row4=mysqli_fetch_array($sql4,MYSQLI_ASSOC);
+				   $min = $row4['min'];
+				   $sql=mysqli_query($db,"select item from inventory where sales = '$min'");
+				   $num=mysqli_num_rows($sql);
+
+				   if($num2>0 || $num > 0)
 				   {	
 						
 					   	while($row2=mysqli_fetch_array($sql2,MYSQLI_ASSOC))
 					   {
-					   echo '<li style="list-style:none; font-size: 1.5em; margin-left: -10px; ">Stock more '.$row2['item'].' to generate more profits based on sales trends';
+					   echo '<li style="list-style:none; font-size: 1.5em; margin-left: -10px; ">Stock more <u><strong>'.$row2['item'].'</strong></u> to generate more profits based on sales trends';
+					   }
+					   echo '<br />';
+					  	while($row=mysqli_fetch_array($sql,MYSQLI_ASSOC))
+					   {
+					   echo '<li style="list-style:none; font-size: 1.5em; margin-left: -10px; margin-top: 10px">Stock less <u><strong>'.$row['item'].'</strong></u> to reduce losses based on sales trends';
 					   }
 				   }
 				   else

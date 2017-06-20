@@ -34,7 +34,7 @@ session_start();
          <style>
          h2{
          	margin: 200px 210px auto 210px;
-         	color: red;
+         	color: black;
          	font-size: 2em;
          	border: 1px solid #ff0000;
          	padding: 20px;
@@ -53,8 +53,11 @@ session_start();
          	font-style:italic;
          }
          </style>
+         <body style='background-color: #333333'>
 
          <h2>Wrong Credentials entered. <a href='index.php' ><u>Click Here</u></a> to go back to Login Page.</h2>
+        
+        </body>
          </html>
 
          ";
