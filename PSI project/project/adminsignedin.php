@@ -97,6 +97,7 @@ popupWindow2 =window.open('itemsoldbydate.php',"_blank","directories=no, status=
 				float: left;
 				
 			}
+
 </style>
 
 
@@ -157,7 +158,7 @@ popupWindow2 =window.open('itemsoldbydate.php',"_blank","directories=no, status=
 
 			<div style="width: 32%; height: 100%; float: left; margin-top: 20px; margin-left: 15px;">
 				<div style="background-color: #FDDFDF; border: 1px solid #F1A899;  margin-top: 20px; margin-bottom: 20px; margin-left: 5px; margin-right: 20px;  border-radius: 8px; padding: 10px;">
-					<h2 style="margin-left: 30px; margin-bottom: -10px;">Products low on Stock </h2>
+					<h2 style="margin-left: 30px; margin-bottom: -10px; color: #cc0000; font-weight: bolder; font-size: 1.8em;">Products low on Stock </h2>
 					<p style="margin-left: 30px;">(Less than 50 Units)</p>
 
 
@@ -228,10 +229,33 @@ popupWindow2 =window.open('itemsoldbydate.php',"_blank","directories=no, status=
 
 				   
 				   ?>
-   </ul>
+   				</ul>
 				</div>
 
-			</div>
+			
+
+
+
+
+
+
+
+				<div style="background-color: #FFFA90; border: 1px solid #DAD55E;  margin-top: 20px; margin-bottom: 20px; margin-left: 5px; margin-right: 20px;  border-radius: 8px; padding: 10px; ">
+					<h2 id="redirect" style="margin-left: 30px; font-size: 1.6em;"><a style="color: black" href="http://localhost/phpmyadmin" onclick="alert('Redirecting to PHPMyAdmin Database Management Page. Login with DBA credentials.')" target="_blank">Show and manage Database</a></h2>
+					
+
+				</div>
+
+
+
+
+
+</div>
+
+
+
+
+
 
 
 
@@ -537,54 +561,6 @@ if ($prev >= 0)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--
-
-
-<div style="position: relative;
-	bottom: 550px;
-	left: 300px;
-	font-size: 1.5em;">
-   <ul>
-   
-
-   <?php
-   //$CRITICAL=10;
-   //$sql2=mysqli_query($db,"select * from inventory where qtyleft<='$CRITICAL'");
-   
-   //if($sql2)
-   {	//echo "<p>These Inventory items are low in stock. Update stock in the inventory Immediately</p>";
-		//echo "<p>$sql2</p>";
-	   //	while($row2=mysqli_fetch_array($sql2,MYSQLI_ASSOC))
-	   {
-	   //echo '<li style="list-style:none;">'.$row2['item'].'';
-	   }
-   }
-   //else
-   {
-   		//echo "<p> hellooooo</p>";
-   }
-
-   
-   ?>
-   </ul>
-</div>
-   
--->
 
 
 <?php
@@ -957,6 +933,7 @@ window.onclick = function(event) {
 }
 
 
+$('#redirect').attr('title', 'Will redirect to a new page')
 
 
 
