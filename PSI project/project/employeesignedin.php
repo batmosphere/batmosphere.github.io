@@ -60,6 +60,11 @@ session_start();
             float: left;
             
          }
+
+   .hidden
+   {
+      display: none;
+   }
 </style>
 
 <script type="text/javascript">
@@ -85,7 +90,7 @@ popupWindow =window.open('printform.php',"_blank","directories=no, status=no, me
                      <h2 style="color: white; float: left; font-size: 2.3em; margin-left: 30px; margin-top: 0px; margin-bottom: 20px; ">   <?php echo $login_session; ?>'s Dashboard</h2> 
             
 
-                    <button onclick="document.getElementById('addsales').style.display='block'" style="width: 200px; float: left;  font-weight: bold;" >Purchase Inventory item</button>
+                    <button  id="purchase" onclick="document.getElementById('addsales').style.display='block'" style="width: 200px; float: left;  font-weight: bold;" >Purchase Inventory item</button>
 
                      <button onclick="document.getElementById('productsoldbyname').style.display='block'" style="width: 200px; float: left; font-weight: bold;" >Calculate Sales of a particular Product</button>
 
@@ -177,7 +182,7 @@ popupWindow =window.open('printform.php',"_blank","directories=no, status=no, me
 
 
 
-               <div style="width: 16%; margin-top: 50px; float: left; background-color: white; border-radius: 15px; padding: 10px; margin-left: 7px;">
+               <div style="width: 16%; margin-top: 10px; float: left; background-color: white; border-radius: 15px; padding: 10px; margin-left: 7px;">
                   <p style=" font-size: 1.4em; margin-left: 40px;">Total Sales of <?php echo "<p style='font-size: 1.4em; margin-left: 40px; font-weight: bold; '>$da</p>" ?></p> 
                          <?php
 
@@ -193,6 +198,18 @@ popupWindow =window.open('printform.php',"_blank","directories=no, status=no, me
                    <button onclick="javascript:child_open()" style="width: 200px; float: left; margin-left: 10px; font-weight: bold;" >Print Today's Receipt</button>
 
                </div>
+
+
+
+<div id="cancel" class="hidden" style="width: 16%; float: left; margin-left: -15px; margin-top: 5px; margin-right: 40px; ">
+<form method="post" action="cancelpurchase.php">
+<button name="submit" type="submit" onclick='closeclick()'  style="font-weight: bold; width: 100%;  height: 100%; background-color: #f44336; border: 1px solid #bc0000;  " >Cancel last Purchase</button>
+</form>
+
+</div>
+
+
+
 
 
 
@@ -234,8 +251,8 @@ popupWindow =window.open('printform.php',"_blank","directories=no, status=no, me
                   ?>
                   </div>
                   <br />
-                  <div style="margin-left: 97px;">Quantity:<input style="margin-left: 37px;" name="qty" type="text" /></div>
-                  <div style="margin-left: 127px; margin-top: 14px;"><input style=" margin-left: 60px; width: 255px; background-color: #4CAF50; color: white;" name="" type="submit" value="Purchase" /></div>
+                  <div style="margin-left: 97px;">Quantity:<input style="margin-left: 37px;" name="qty" type="text"  required /></div>
+                  <div style="margin-left: 127px; margin-top: 14px;"><input onclick='openclick()' style=" margin-left: 60px; width: 255px; background-color: #4CAF50; color: white;" name="" type="submit" value="Purchase" /></div>
                </form>
                </div>
 
@@ -423,6 +440,29 @@ window.onclick = function(event) {
     }
 }
 
+document.getElementById('cancel').onsubmit = function(){
+   location.reload(true);
+}
+
+
+function openclick(){
+   document.getElementById('cancel').style.display="block";
+   sessionStorage.setItem('clicked',true);
+};
+
+function closeclick(){
+   document.getElementById('cancel').style.display="none";
+   sessionStorage.removeItem('clicked');
+   window.location.reload();
+};
+
+window.onload = function(){
+   var data = sessionStorage.getItem('clicked');
+   if(data == 'true')
+   {
+      openclick();
+   }
+};
 </script>
 
 </body>
