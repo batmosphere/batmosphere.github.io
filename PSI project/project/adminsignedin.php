@@ -98,6 +98,14 @@ popupWindow2 =window.open('itemsoldbydate.php',"_blank","directories=no, status=
 				
 			}
 
+
+			.blur
+		   {
+		      backdrop-filter:contrast(1.85) blur(17px);
+		      background: rgba(255,255,255,0.15);
+
+		   }
+
 </style>
 
 
@@ -264,7 +272,7 @@ popupWindow2 =window.open('itemsoldbydate.php',"_blank","directories=no, status=
 
 
 
-			<div class=" modal" id="showinventory">
+			<div class="blur  modal" id="showinventory">
 
 				<div class=" modal-content animate"  style="  width: 1000px; height: 400px; margin-left: 160px; margin-top: 30px;">
 					<div class="imgcontainer" style="position: relative; bottom: 20px;">
@@ -370,7 +378,7 @@ if ($prev >= 0)
 
 
 
-			<div class=" modal" id="showemployee">
+			<div class="blur  modal" id="showemployee">
 
 							<div class=" modal-content animate" style="width: 700px; height: 400px; margin-left: 300px; margin-top: 30px;">
 								<div class="imgcontainer" style="position: relative; bottom: 20px;">
@@ -471,7 +479,7 @@ if ($prev >= 0)
 
 
 
-						<div class=" modal" id="showsales">
+						<div class=" blur modal" id="showsales">
 
 							<div class=" modal-content animate" style="width: 800px; height: 400px; margin-left: 270px; margin-top: 30px;">
 								<div class="imgcontainer" style="position: relative; bottom: 20px;">
@@ -574,7 +582,7 @@ $da=date("Y-m-d");
 
 
 
-			<div class="modal" id="addproitem" >
+			<div class="blur modal" id="addproitem" >
 			<form action="updateproduct.php" class="modal-content animate" method="post">
 					   <div class="imgcontainer">
 		    		      <span onclick="document.getElementById('addproitem').style.display='none'" class="close" title="Close Modal">&times;</span>
@@ -603,7 +611,7 @@ $da=date("Y-m-d");
 
 
 
-<div class=" modal" id="addpro">
+<div class="blur  modal" id="addpro">
 <form action="saveproduct.php" class="modal-content animate" method="post">
    <div class="imgcontainer">
     		      <span onclick="document.getElementById('addpro').style.display='none'" class="close" title="Close Modal">&times;</span>
@@ -629,7 +637,7 @@ $da=date("Y-m-d");
 
 
 
-			<div class=" modal" id="editprice">
+			<div class="blur  modal" id="editprice">
 			<form action="updateprice.php" class="modal-content animate" method="post">
 			   <div class="imgcontainer">
     		      <span onclick="document.getElementById('editprice').style.display='none'" class="close" title="Close Modal">&times;</span>
@@ -657,7 +665,7 @@ $da=date("Y-m-d");
 
 
 
-<div class=" modal" id="addemployee">
+<div class="blur modal" id="addemployee">
 <form action="addemployee.php" class="modal-content animate" method="post">
   <div class="imgcontainer">
     		      <span onclick="document.getElementById('addemployee').style.display='none'" class="close" title="Close Modal">&times;</span>
@@ -678,7 +686,7 @@ $da=date("Y-m-d");
 </div>
 
 
-			<div class=" modal" id="deleteemployee">
+			<div class="blur  modal" id="deleteemployee">
 			<form action="deleteemployee.php" class="modal-content animate" method="post">
 			   <div class="imgcontainer">
     		      <span onclick="document.getElementById('deleteemployee').style.display='none'" class="close" title="Close Modal">&times;</span>
@@ -706,7 +714,7 @@ $da=date("Y-m-d");
 
 
 
-<div class=" modal" id="addadmin">
+<div class=" blur modal" id="addadmin">
 <form action="addadmin.php" class="modal-content animate" method="post">
    <div class="imgcontainer">
     		      <span onclick="document.getElementById('addadmin').style.display='none'" class="close" title="Close Modal">&times;</span>
@@ -729,7 +737,7 @@ $da=date("Y-m-d");
 
 
 
-			<div class=" modal" id="deleteproduct">
+			<div class=" blur modal" id="deleteproduct">
 			<form action="deleteproduct.php" class="modal-content animate" method="post">
 			   <div class="imgcontainer">
     		      <span onclick="document.getElementById('deleteproduct').style.display='none'" class="close" title="Close Modal">&times;</span>
@@ -757,7 +765,7 @@ $da=date("Y-m-d");
 
 
 
-<div class=" modal" id="totalsales">
+<div class="blur  modal" id="totalsales">
 <form action="adminsignedin.php" class="modal-content animate" method="post">
    <div class="imgcontainer">
     		      <span onclick="document.getElementById('totalsales').style.display='none'" class="close" title="Close Modal">&times;</span>
@@ -802,7 +810,7 @@ $da=date("Y-m-d");
 
 
 
-				<div id="itemsoldbydate" class="modal" >
+				<div id="itemsoldbydate" class="blur modal" >
 			  
 			  <form class="modal-content animate" method="post" action="itemsoldbydate.php">
 			    <div class="imgcontainer">
@@ -828,7 +836,7 @@ $da=date("Y-m-d");
 
 
 
-<div class=" modal" id="productsoldbyname">
+<div class=" blur modal" id="productsoldbyname">
 	<form action="itemsoldbyname.php" class="modal-content animate" method="post">
 			   <div class="imgcontainer">
     		      <span onclick="document.getElementById('productsoldbyname').style.display='none'" class="close" title="Close Modal">&times;</span>

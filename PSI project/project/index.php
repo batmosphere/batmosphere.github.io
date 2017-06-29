@@ -16,18 +16,31 @@
     <title>Inventory Management System</title>
 
     <link rel="stylesheet" type="text/css" href="style1.css">
+
+    <style type="text/css">
+        .blur
+       {
+          backdrop-filter:contrast(1.85) blur(17px);
+          background: rgba(255,255,255,0.15);
+
+       }
+
+    </style>
+
 </head>
+
+
 <body style="background-color: #333333;">
 
 
-	<div id="page" style="background-color: #efefef;">
+	<div id="page" style="background-color: #efefef;" >
 		  
         
 		<h2 style="color: black;">Welcome to Inventory Management System</h2>
 
         
-		<button onclick="document.getElementById('adminlogin').style.display='block'" style="width: 200px; margin-left: 170px ; font-weight: bolder;" >Admin Login</button>
-		<button onclick="document.getElementById('employeelogin').style.display='block'" style="width: 200px; font-weight: bolder;" >Employee Login</button>
+		<button id="button1" onclick="document.getElementById('adminlogin').style.display='block'" style="width: 200px; margin-left: 170px ; font-weight: bolder;" >Admin Login</button>
+		<button id="button2" onclick="document.getElementById('employeelogin').style.display='block'" style="width: 200px; font-weight: bolder;" >Employee Login</button>
 
 
 	</div>
@@ -35,7 +48,7 @@
 
 
 
-    <div id="adminlogin" class="modal" >
+    <div id="adminlogin" class="blur modal" >
 			  
 			  <form class="modal-content animate" method="post" action="adminlogin.php">
 			    <div class="imgcontainer">
@@ -63,7 +76,7 @@
 
 
 
-	<div id="employeelogin" class="modal">
+	<div id="employeelogin" class="blur modal">
 			  
 			  <form class="modal-content animate" method="post" action="employeelogin.php">
 			    <div class="imgcontainer">
@@ -106,6 +119,8 @@ window.onclick = function(event) {
         modal1.style.display = "none";
     }
 }
+
+
 </script>
 
 

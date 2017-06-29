@@ -65,6 +65,19 @@ session_start();
    {
       display: none;
    }
+
+
+   .blur
+   {
+      backdrop-filter:contrast(1.85) blur(17px);
+      background: rgba(255,255,255,0.15);
+
+   }
+
+   body
+   {
+     
+   }
 </style>
 
 <script type="text/javascript">
@@ -80,7 +93,7 @@ popupWindow =window.open('printform.php',"_blank","directories=no, status=no, me
 </script>
 </head>
 
-<body style="background-color:#333333; margin: 0;padding: 0;">
+<body style="background-color:#333333; margin: 0;padding: 0;" >
 
 
 
@@ -215,22 +228,28 @@ popupWindow =window.open('printform.php',"_blank","directories=no, status=no, me
 
                <div style="width: 77%;   padding: 10px; float: left; background-color: white; border: 1px solid #E9EBEE; border-radius: 15px; margin-left: 10px; margin-top: 10px;" >
             
-            <div  class="chart-container" style=" margin-bottom: 10px;  ">
-                        <canvas id="mycanvas"></canvas>
-               </div>
+                           <div  class="chart-container" style=" margin-bottom: 10px;  ">
+                                       <canvas id="mycanvas"></canvas>
+                              </div>
 
 
 
 
-               <div class="chart-container" style=" margin-top:  10px;  ">
-                        <canvas id="mycanvas2"></canvas>
-               </div>
+                              <div class="chart-container" style=" margin-top:  10px;  ">
+                                       <canvas id="mycanvas2"></canvas>
+                              </div>
 
-         </div>
+             </div>
+         
 
 
 
-               <div class=" modal" id="addsales" >
+
+
+
+
+
+               <div class="blur modal" id="addsales" >
                <form action="addsales.php" class="modal-content animate" method="post">
                   <div class="imgcontainer">
                      <span onclick="document.getElementById('addsales').style.display='none'" class="close" title="Close Modal">&times;</span>
@@ -269,7 +288,7 @@ popupWindow =window.open('printform.php',"_blank","directories=no, status=no, me
 
 
 
-<div class=" modal" id="totalsales">
+<div class="blur modal" id="totalsales">
 <form action="employeesignedin.php" class="modal-content animate" method="post">
    <div class="imgcontainer">
                <span onclick="document.getElementById('totalsales').style.display='none'" class="close" title="Close Modal">&times;</span>
@@ -314,7 +333,7 @@ popupWindow =window.open('printform.php',"_blank","directories=no, status=no, me
 
 
 
-            <div id="itemsoldbydate" class="modal" >
+            <div id="itemsoldbydate" class=" blur modal" >
            
            <form class="modal-content animate" method="post" action="Employeeitemsoldbydate.php">
              <div class="imgcontainer">
@@ -340,7 +359,7 @@ popupWindow =window.open('printform.php',"_blank","directories=no, status=no, me
 
 
 
-<div class=" modal" id="productsoldbyname">
+<div class="blur modal" id="productsoldbyname">
    <form action="Employeeitemsoldbyname.php" class="modal-content animate" method="post">
             <div class="imgcontainer">
                <span onclick="document.getElementById('productsoldbyname').style.display='none'" class="close" title="Close Modal">&times;</span>
@@ -372,7 +391,7 @@ popupWindow =window.open('printform.php',"_blank","directories=no, status=no, me
 </div >
 
 
-<div id="twodates" class="modal" >
+<div id="twodates" class=" blur modal" >
            
            <form class="modal-content animate" method="post" action="">
              <div class="imgcontainer">
