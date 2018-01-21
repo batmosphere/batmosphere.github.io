@@ -4,6 +4,14 @@
         transition: background 5s;
         opacity: 0.85;
         } 
+        #gameon
+        {
+        display: none;
+        }
+        #gameoff
+        {
+        display: block;
+        }
         .box
         {
         background-color: #3c3c3c;
@@ -121,4 +129,77 @@
         p
         {
         line-height:10px;
+        }
+
+       #date
+       {
+        color: white;
+          font-size: 1.3em;
+          font-family: Georgia, "Times New Roman", Times, serif;
+          font-weight: normal;
+          letter-spacing: 0.2em;
+          opacity: 0.6;
+          filter: alpha(opacity=60);
+          text-align: center;
+
+       }
+
+       #abc
+       {
+        position: relative;
+        top: 5px;
+        bottom: -5px;
+        color: white;
+        font-size: 1.2em;
+        top: 5px;
+          border-bottom: thin solid;
+          padding-bottom: 20px;
+          opacity: 0.80;
+          filter: alpha(opacity=80);
+          text-align: center;
+       }
+
+       #quote
+       {
+          
+          color: white;
+          font-family: "Adobe Caslon Pro", "Hoefler Text", Georgia, Garamond, Times, serif;
+          position: relative;
+          bottom: 5px;
+          top: 5px;
+          text-align:center;
+          text-transform: lowercase;
+          letter-spacing:0.1em;
+          line-height: 100%;
+          font-size: 1.1em;
+          font-variant: small-caps;
+       }
+
+       #gen {
+          outline: none;
+          margin: auto;
+          display: block;
+          position: relative;
+          bottom: 8px;
+          padding-top: 5px;
+          text-decoration: none;
+          opacity: 0.6;
+          background-color: black;
+          color: white;
+          border: thin solid white;
+          height: 40px;
+          width: 100px;
+          border-radius: 10px;
+          transition: 0.5s;
+        }
+
+        #gen:hover {
+          background-color: white;
+          color: black;
+          border: thin solid black;
+          opacity: 0.8;
+        }
+
+        #gen a {
+          text-decoration: none;
         }

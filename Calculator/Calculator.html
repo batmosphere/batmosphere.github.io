@@ -6,9 +6,10 @@
     
     <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
     <script type="text/javascript" src="javascript.js"></script>
+
     
 </head>
-<body>
+<body onload="startTime(); startDate()">
     <div class="box">
     <div class="display">
         <input type="text" name="number" id="d" style="font-family: 'Orbitron', sans-serif;">
@@ -18,38 +19,60 @@
     <p> 
         <input type="button" class="button gray" value="Details" onclick='calculate("Software Engineering Assignment 1  ")'>
         <input type="button" class="button gray" value="Group"   onclick='calculate("Mukund Kothari, Piyush Kalantri, Ashwin Nallan")'>
-        <input type="button" class="button gray" value="Group No."  onclick='calculate("Group Number 3 ")'>
+        <input type="button" id="shift" class="button gray" value="Quotes"  onclick='hide()'>
         <input type="button" class="button orange" value="/" onclick='append("/")'>
     </p>
 
-    <p>
-        <input type="button" class="button black" value="7" onclick='append("7")'>
-        <input type="button" class="button black" value="8" onclick='append("8")'>
-        <input type="button" class="button black" value="9" onclick='append("9")'>
-        <input type="button" class="button orange" value="*" onclick='append("*")'>
-    </p>
+    <div id="gameoff">
 
-    <p>
-        <input type="button" class="button black" value="4" onclick='append("4")'>
-        <input type="button" class="button black" value="5" onclick='append("5")'>
-        <input type="button" class="button black" value="6" onclick='append("6")'>
-        <input type="button" class="button orange" value="-" onclick='append("-")'>
-    </p>
-    
-    <p> 
-        <input type="button" class="button black" value="1" onclick='append("1")'>
-        <input type="button" class="button black" value="2" onclick='append("2")'>
-        <input type="button" class="button black" value="3" onclick='append("3")'>
-        <input type="button" class="button orange" value="+" onclick='append("+")'>
-    </p>
-    
-       <p>
-        <input type="button" class="button black" value="0" onclick='append("0")'>
-        <input type="button" class="button black" value="." onclick='append(".")'>
-        <input type="button" class="button black" value="C" onclick="document.getElementById('d').value = ''">
-        <input type="button" class="button orange" value="=" onclick='e()'>
+        <p>
+            <input type="button" class="button black" value="7" onclick='append("7")'>
+            <input type="button" class="button black" value="8" onclick='append("8")'>
+            <input type="button" class="button black" value="9" onclick='append("9")'>
+            <input type="button" class="button orange" value="*" onclick='append("*")'>
+        </p>
 
-    </p>
+        <p>
+            <input type="button" class="button black" value="4" onclick='append("4")'>
+            <input type="button" class="button black" value="5" onclick='append("5")'>
+            <input type="button" class="button black" value="6" onclick='append("6")'>
+            <input type="button" class="button orange" value="-" onclick='append("-")'>
+        </p>
+        
+        <p> 
+            <input type="button" class="button black" value="1" onclick='append("1")'>
+            <input type="button" class="button black" value="2" onclick='append("2")'>
+            <input type="button" class="button black" value="3" onclick='append("3")'>
+            <input type="button" class="button orange" value="+" onclick='append("+")'>
+        </p>
+        
+           <p>
+            <input type="button" class="button black" value="0" onclick='append("0")'>
+            <input type="button" class="button black" value="." onclick='append(".")'>
+            <input type="button" class="button black" value="C" onclick="document.getElementById('d').value = ''">
+            <input type="button" class="button orange" value="=" onclick='e()'>
+
+        </p>
+
+    </div>
+
+    <div id="gameon">
+            
+            <div id="date"></div>
+            <div id="abc"></div>
+            
+                <div>
+                    <p id="quote">"the people who are crazy enough to think they can change the world are the ones who do." <br/>- Steve Jobs</p>
+                </div>
+            
+            
+            
+            <button id="gen" onclick="genQuote()">New Quote</button>
+            
+        
+  
+    </div>
+
 
     </div>
     </div>
