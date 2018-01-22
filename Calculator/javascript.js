@@ -59,11 +59,13 @@
         words[70] = 'Seventy';
         words[80] = 'Eighty';
         words[90] = 'Ninety';
+        var words_string = "";
+        
         amount = amount.toString();
         var atemp = amount.split(".");
         var number = atemp[0].split(",").join("");
         var n_length = number.length;
-        var words_string = "";
+        
         if (n_length <= 9) {
             var n_array = new Array(0, 0, 0, 0, 0, 0, 0, 0, 0);
             var received_n_array = new Array();
@@ -112,14 +114,36 @@
         }
 
         function withDecimal(n) {
-        var nums = n.toString().split('.')
-        var whole = convertNumberToWords(nums[0])
-        if (nums.length == 2) {
-            var fraction = convertNumberToWords(nums[1])
-            return whole + 'point ' + fraction;
-        } else {
-            return whole;
+        
+        if (n<0) 
+        {   
+            n = n*-1;    
+            var nums = n.toString().split('.')
+            var whole = convertNumberToWords(nums[0])
+                if (nums.length == 2) 
+                {
+                var fraction = convertNumberToWords(nums[1])
+                return "Minus " + whole + 'point ' + fraction;
+                } else 
+                {
+                    return "Minus " + whole;
+                }
         }
+        else
+        {       
+                var nums = n.toString().split('.')
+                var whole = convertNumberToWords(nums[0])
+                if (nums.length == 2) 
+                {
+                var fraction = convertNumberToWords(nums[1])
+                return whole + 'point ' + fraction;
+                } 
+                else 
+                {
+                    return whole;
+                }
+        }
+        
     }
 
 
@@ -143,12 +167,15 @@
         var x = document.getElementById("gameon");
         var y = document.getElementById("gameoff");
 
-        if (x.style.display === "none") {
+        if (x.style.display == "none") 
+        {
             x.style.display = "block";
             document.getElementById("shift").value="Calculator";
             y.style.display = "none";
 
-        } else {
+        } 
+        else 
+        {
             x.style.display = "none";
             document.getElementById("shift").value="Quotes";
             y.style.display = "block";
