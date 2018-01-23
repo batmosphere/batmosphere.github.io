@@ -4,7 +4,7 @@
         transition: background 5s;
         opacity: 0.85;
         filter:contrast(140%);
-        
+
 
         } 
         #gameon
@@ -60,6 +60,7 @@
         position: relative;
         top: 15px;
         left: 2px;
+        
         }
         .button
         {
