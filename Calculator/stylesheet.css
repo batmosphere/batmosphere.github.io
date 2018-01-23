@@ -3,6 +3,9 @@
         {
         transition: background 5s;
         opacity: 0.85;
+        filter:contrast(140%);
+        
+
         } 
         #gameon
         {
@@ -14,6 +17,7 @@
         }
         .box
         {
+
         background-color: #3c3c3c;
         height:400px;
         width:650px;
